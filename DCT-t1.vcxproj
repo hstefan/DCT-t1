@@ -74,6 +74,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\sample\LinearGen.hpp" />
+    <ClInclude Include="src\sample\RandomGen.hpp" />
+    <ClInclude Include="src\sample\SampleGenerator.hpp" />
+    <ClInclude Include="src\sample\SenoidalGen.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\test\testing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
