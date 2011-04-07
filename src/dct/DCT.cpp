@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-#define HS_PI 3,1415926535897932 
+#define HS_PI 3.1415926535897932 
 
 namespace hstefan
 {
@@ -14,24 +14,25 @@ namespace hstefan
 
 		std::vector<output_type> DCT::fdct(const std::vector<signal_type>& sample)
 		{
-			std::vector<signal_type>::const_iterator end = sample.end();
-			unsigned int i = 0;
-			output_type out = 0;
-			std::vector<output_type> ret;
-			
-			for(std::vector<signal_type>::const_iterator it = sample.begin(); it != end; ++it)
+			double out = 0;
+			std::vector<output_type> res;
+			double cf = 1;
+			for(unsigned int i = 0; i < sample.size(); ++i)
 			{
 				out = 0;
-				for(unsigned int j = i; j < sample.size(); ++j)
+				if(i == 0)
+					cf = (double)1/sqrt((double)2);
+				else 
+					cf = 1;
+				for(unsigned int j = 0; j < sample.size(); ++j)
 				{
-					out += (*it) * cos((double)((2*j + 1)*i*HS_PI/(2 * sample.size())));
+					out += (double)sample[j] * cos((double)((2*j + 1)*i*HS_PI)/(2*sample.size()));		
 				}
-				out *= 0.5 * (i == 0 ? (double)1/sqrt((double)2) : 1);
-				std::cout << out << std::endl;
-				ret.push_back(out);
-				++i;
+				out *= 0.5 * cf;
+				res.push_back(out);
 			}
-			return ret;
+
+			return res;
 		}
 
 		std::vector<signal_type> DCT::idct(const std::vector<output_type>& coef) 
