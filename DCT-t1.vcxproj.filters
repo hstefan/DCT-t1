@@ -27,9 +27,15 @@
     <ClInclude Include="src\sample\SenoidalGen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\dct\DCT.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\test\testing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dct\DCT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
