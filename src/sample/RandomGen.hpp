@@ -4,6 +4,7 @@
 #include "SampleGenerator.hpp"
 #include <ctime>
 #include <cstdlib>
+#include <limits>
 
 namespace hstefan 
 {
@@ -18,7 +19,7 @@ namespace hstefan
 				signal.resize(n);
 			
 				for(unsigned int i = 0; i < n; ++i) 
-					signal[i] = (double)rand() / RAND_MAX;
+					signal[i] = (signal_type) rand() % std::numeric_limits<signal_type>::max();
 			}
 		};
 	}//namespace sample
