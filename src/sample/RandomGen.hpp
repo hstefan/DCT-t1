@@ -10,6 +10,9 @@ namespace hstefan
 {
 	namespace sample 
 	{
+		/*
+		 * Gera uma amostra composta por numeros aleatorios.
+		 */
 		class RandomGen : public SampleGenerator
 		{
 		public:
