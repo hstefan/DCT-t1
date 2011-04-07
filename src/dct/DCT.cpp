@@ -22,11 +22,12 @@ namespace hstefan
 		{
 			double out = 0;
 			std::vector<output_type> res;
-			for(unsigned int i = 0; i < sample.size(); ++i)
+			const unsigned int sz  = sample.size();
+			for(unsigned int i = 0; i < sz; ++i)
 			{
 				out = 0;
-				for(unsigned int j = 0; j < sample.size(); ++j)
-					out += (output_type)sample[j] * cos((double)((2*j + 1)*i*HS_PI)/(2*sample.size()));		
+				for(unsigned int j = 0; j < sz; ++j)
+					out += (output_type)sample[j] * cos((double)((2*j + 1)*i*HS_PI)/(2*sz));		
 				out *= 0.5 * (i == 0? math::invSqrt(2) : 1);
 				res.push_back(out);
 			}
@@ -37,14 +38,15 @@ namespace hstefan
 		{
 			double out = 0;
 			std::vector<signal_type> res;
-			for(unsigned int i = 0; i < coef.size(); ++i) 
+			const unsigned int sz  = coef.size();
+			for(unsigned int i = 0; i < sz; ++i) 
 			{
 				out = 0;
-				for(unsigned int j = 0; j < coef.size(); ++j) 
+				for(unsigned int j = 0; j < sz; ++j) 
 					out += coef[j] * (j == 0 ? math::invSqrt(2) : 1) *
-						cos(((2*i + 1)*j*HS_PI)/(2*coef.size()));
-				out *= 0.5;
-				out = floor(out + 0.5);
+						cos(((2*i + 1)*j*HS_PI)/(2*sz));
+				out *= .5;
+				out = floor(out + .5); //arredonda o numero
 				res.push_back((signal_type)out);
 			}
 			std::cout << std::endl;
