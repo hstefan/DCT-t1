@@ -23,7 +23,7 @@ namespace hstefan
 				signal.resize(n);
 				signal[0] = start;
 				for(unsigned int i = 1; i < n; ++i) 
-					signal[i] = start + i;
+					signal[i] = start + rate;
 			}
 
 		};
