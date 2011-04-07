@@ -2,6 +2,7 @@
 #define HSTEFAN_SIGNAL_GENERATOR_HPP
 
 #include <vector>
+#include "../dct/DCT.hpp"
 
 namespace hstefan
 {
@@ -13,7 +14,7 @@ namespace hstefan
 		class SampleGenerator 
 		{
 		public:
-			typedef unsigned char signal_type;
+			typedef dct::DiscreteCosineTransform::signal_type signal_type;
 
 			/**
 			 * Gera a amostra propriamente dita.
