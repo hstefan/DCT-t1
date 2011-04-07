@@ -2,6 +2,8 @@
 #include "../sample/LinearGen.hpp"
 #include <iostream>
 
+#include "../dct/DCT.hpp"
+
 int main(int argc, char* argv[]) 
 {
 	srand((unsigned int)time(0));
@@ -21,6 +23,26 @@ int main(int argc, char* argv[])
 			std::cout << (unsigned int)*ij << " ";
 		std::cout << std::endl;
 	}
+
+	std::vector<unsigned char> vs;
+	vs.push_back(8);
+	vs.push_back(16);
+	vs.push_back(24);
+	vs.push_back(32);
+	vs.push_back(40);
+	vs.push_back(48);
+	vs.push_back(56);
+	vs.push_back(64);
+	
+	using namespace hstefan::dct;
+
+	std::vector<double> t;
+	t = DiscreteCosineTransform::fdct(vs);
+
+	for(std::vector<double>::iterator it = t.begin(); it != t.end(); ++it)
+		std::cout << *it << " ";
+
+	std::cout << std::endl;
 
 	delete l;
 	delete r;
