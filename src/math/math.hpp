@@ -5,6 +5,10 @@ namespace hstefan
 {
 	namespace math
 	{
+		/*
+		 * @param x valor a ser invertida a raiz quadrada.
+		 * @return raiz quadrada invertida.
+		 */
 		float invSqrt(float x)
 		{
 			float xhalf = 0.5f*x;
