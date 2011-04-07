@@ -10,7 +10,7 @@ namespace hstefan
 		class SampleGenerator 
 		{
 		public:
-			typedef double signal_type;
+			typedef unsigned char signal_type;
 			virtual void generateSample(unsigned int n) = 0;
 			inline std::vector<signal_type>& getSample();
 			inline const std::vector<signal_type>& getSample() const;
