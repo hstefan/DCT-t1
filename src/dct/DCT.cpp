@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-#define HS_PI 3.1415926535897932 
+#define HS_PI 3.14159265358979323846264338327950288419716939937510 
 
 namespace hstefan
 {
