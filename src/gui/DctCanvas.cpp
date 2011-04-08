@@ -9,7 +9,7 @@ namespace hstefan
 		DctCanvas::DctCanvas(const unsigned int& window_width)
 			: container_width(window_width), coefs(), 
 			scv::Canvas(scv::Point(COMPONENT_SPACING_X, COMPONENT_SPACING_Y), 
-			scv::Point(window_width, CANVAS_HEIGHT)),
+			scv::Point(window_width - COMPONENT_SPACING_X, CANVAS_HEIGHT - COMPONENT_SPACING_Y)),
 			bg_color(1.0,1.0,1.0, 0.1)
 		{
 		}
@@ -25,12 +25,18 @@ namespace hstefan
 			glClear(GL_COLOR_BUFFER_BIT);
 			glBegin(GL_LINE_STRIP);
 				glColor3f(1.f, 0.f, 0.093);
-				unsigned int x = 0;
+				unsigned int x = 10;
 				const unsigned int ratio = (container_width - COMPONENT_SPACING_X)/coefs.size();
+				unsigned int max = 0;
+				for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
+				{
+					if (abs(*it) > max) 
+						max = abs(*it);
+				}
 
 				for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
 				{
-					glVertex2i(x, (*it + (CANVAS_HEIGHT/2) + COMPONENT_SPACING_Y));
+					glVertex2i(x, ((CANVAS_HEIGHT/2.f)/(float)max) *(*it) + CANVAS_HEIGHT/2);
 					x += ratio;
 				}
 			glEnd();
