@@ -20,7 +20,7 @@ namespace hstefan
 			kernel->setWindowTitle("Discrete Cosine Transform - T1");
 
 			sample::SampleGenerator* li = new sample::RandomGen();
-			li->generateSample(10);
+			li->generateSample(16);
 			std::vector<unsigned char>& f = li->getSample();
 			std::vector<double>& out = dct::DiscreteCosineTransform::fdct(f);
 			dct_canvas->setCoeficents(out);
