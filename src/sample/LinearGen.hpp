@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <limits>
+#include "SampleGenerator.hpp"
 
 namespace hstefan
 {
