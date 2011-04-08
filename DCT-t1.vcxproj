@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\dct\DCT.hpp" />
+    <ClInclude Include="src\gui\DctCanvas.hpp" />
     <ClInclude Include="src\gui\Interface.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\sample\LinearGen.hpp" />
@@ -88,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dct\DCT.cpp" />
+    <ClCompile Include="src\gui\DctCanvas.cpp" />
+    <ClCompile Include="src\gui\Interface.cpp" />
     <ClCompile Include="src\test\testing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
