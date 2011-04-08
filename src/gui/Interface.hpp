@@ -1,7 +1,9 @@
 #ifndef HSTEFAN_INTERFACE_HPP
 #define HSTEFAN_INTERFACE_HPP
 
-#include <SCV/SCV.h>
+#include <SCV/Kernel.h>
+#include <SCV/ColorScheme.h>
+#include "DctCanvas.hpp"
 
 namespace hstefan
 {
@@ -10,19 +12,15 @@ namespace hstefan
 		class Interface
 		{
 		public:
-			Interface()
-			{
-				kernel = scv::Kernel::getInstance();
-				color_scheme = scv::ColorScheme::getInstance();
-				color_scheme->loadScheme(scv::ColorScheme::windows);
-				kernel->setWindowSize(640, 480);
-				kernel->setWindowTitle("Discrete Cosine Transform - T1");
-				kernel->run();
-			}
+			Interface();
+
+			static const unsigned int W_WIDTH = 640;
+			static const unsigned int W_HEIGHT = 480;
 
 		private:
 			scv::Kernel* kernel;
 			scv::ColorScheme* color_scheme;
+			DctCanvas* dct_canvas;
 		};
 	}
 }
