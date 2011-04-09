@@ -5,6 +5,7 @@
 #include "../dct/DCT.hpp"
 #include <vector>
 #include <SCV/Color4f.h>
+#include <utility>
 
 namespace hstefan
 {
@@ -17,10 +18,12 @@ namespace hstefan
 		{
 		public:
 			typedef dct::DiscreteCosineTransform::output_type output_type;
-
+			typedef std::pair<unsigned int, unsigned int> vertex_type;
 			static const unsigned int COMPONENT_SPACING_X = 10;
 			static const unsigned int COMPONENT_SPACING_Y = 10;
 			static const unsigned int CANVAS_HEIGHT = 360;
+			static const unsigned int SQUARE_LENGTH = 4;
+
 
 			DctCanvas(const unsigned int& container_width);
 			
@@ -29,8 +32,10 @@ namespace hstefan
 			 */
 			void setCoeficents(const std::vector<output_type>& coef);
 			void render();
+		protected:
+			void createBuffer(const std::vector<output_type>& coefs);
 		private:
-			std::vector<output_type> coefs;	
+			std::vector<vertex_type> vertex_buffer;	
 			const unsigned int container_width;
 			scv::Color4f bg_color;
 			
