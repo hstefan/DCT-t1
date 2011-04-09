@@ -1,6 +1,5 @@
 #include "DctCanvas.hpp"
 #include <cmath>
-#include <iostream>
 
 namespace hstefan
 {
@@ -10,7 +9,7 @@ namespace hstefan
 			: container_width(window_width), vertex_buffer(), 
 			scv::Canvas(scv::Point(COMPONENT_SPACING_X, COMPONENT_SPACING_Y), 
 			scv::Point(window_width - COMPONENT_SPACING_X, CANVAS_HEIGHT - COMPONENT_SPACING_Y)),
-			bg_color(1.0,1.0,1.0, 0.1)
+			bg_color(1.0, 1.0, 1.0, 0.1)
 		{}
 
 		void DctCanvas::setCoeficents(const std::vector<output_type>& coef)
@@ -23,12 +22,13 @@ namespace hstefan
 			glClearColor(bg_color[0], bg_color[1], bg_color[2], bg_color[3]);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glBegin(GL_LINE_STRIP);
-				glColor3f(1.f, 0.f, 0.093);
+				glColor3f(1.f, 0.f, 0.3f);
 				for(std::vector<vertex_type>::const_iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it)
 					glVertex2i((*it).first, (*it).second);
 			glEnd();
 
 			glBegin(GL_QUADS);
+				glColor3f(1.f, 0.f, 0.f);
 				for(std::vector<vertex_type>::const_iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it)
 				{	
 					glVertex2i((*it).first - SQUARE_LENGTH, (*it).second + SQUARE_LENGTH);

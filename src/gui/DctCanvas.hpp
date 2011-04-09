@@ -22,7 +22,7 @@ namespace hstefan
 			static const unsigned int COMPONENT_SPACING_X = 10;
 			static const unsigned int COMPONENT_SPACING_Y = 10;
 			static const unsigned int CANVAS_HEIGHT = 360;
-			static const unsigned int SQUARE_LENGTH = 4;
+			static const unsigned int SQUARE_LENGTH = 3;
 
 
 			DctCanvas(const unsigned int& container_width);
