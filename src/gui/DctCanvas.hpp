@@ -31,8 +31,13 @@ namespace hstefan
 			 * Seta quais coeficentes serão desenhados.
 			 */
 			void setCoeficents(const std::vector<output_type>& coef);
+
 			void render();
 		protected:
+			/**
+			 * Gera um buffer de vértices que serão desenhados futuramente na função render, já faz uma escala para desenhar de maneira mais visivel ao usario final.
+			 * @param coefs coeficentes da DCT.
+			 */
 			void createBuffer(const std::vector<output_type>& coefs);
 		private:
 			std::vector<vertex_type> vertex_buffer;	

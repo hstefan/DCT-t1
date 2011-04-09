@@ -51,9 +51,8 @@ namespace hstefan
 			}
 			for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
 			{
-				//glVertex2i(x, ((CANVAS_HEIGHT/2.f)/(float)max) *(*it) + CANVAS_HEIGHT/2);
 				vertex_buffer.push_back( vertex_type(x, 
-					((CANVAS_HEIGHT/2.f)/(float)max) *(*it) + CANVAS_HEIGHT/2) );
+					((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) );
 				x += ratio;
 			}
 		}
