@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\dct\DCT.hpp" />
+    <ClInclude Include="src\gui\CoefTable.hpp" />
     <ClInclude Include="src\gui\DctCanvas.hpp" />
     <ClInclude Include="src\gui\Interface.hpp" />
     <ClInclude Include="src\math\math.hpp" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dct\DCT.cpp" />
+    <ClCompile Include="src\gui\CoefTable.cpp" />
     <ClCompile Include="src\gui\DctCanvas.cpp" />
     <ClCompile Include="src\gui\Interface.cpp" />
     <ClCompile Include="src\test\testing.cpp" />
