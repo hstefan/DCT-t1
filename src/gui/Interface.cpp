@@ -23,7 +23,7 @@ namespace hstefan
 			dct_canvas->setCoeficents(out);
 
 			coef_tab = new CoefTable(16, dct::DiscreteCosineTransform::fdct(f), 
-				scv::Point(10, dct_canvas->getHeight() + 10), W_WIDTH);
+				scv::Point(8, dct_canvas->getHeight() + 20), W_WIDTH);
 			kernel->addComponent(coef_tab);
 
 			kernel->setWindowSize(640, 480);
