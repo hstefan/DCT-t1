@@ -33,6 +33,15 @@ namespace hstefan
 			void setCoeficents(const std::vector<output_type>& coef);
 
 			void render();
+			inline unsigned int getCoefsNumber() const
+			{
+				return dct_coef.size();
+			}
+
+			inline std::vector<output_type>& getCoefs()
+			{
+				return dct_coef;
+			}
 		protected:
 			/**
 			 * Gera um buffer de vértices que serão desenhados futuramente na função render, já faz uma escala para desenhar de maneira mais visivel ao usario final.
@@ -41,6 +50,7 @@ namespace hstefan
 			void createBuffer(const std::vector<output_type>& coefs);
 		private:
 			std::vector<vertex_type> vertex_buffer;	
+			std::vector<output_type> dct_coef;
 			const unsigned int container_width;
 			scv::Color4f bg_color;
 			

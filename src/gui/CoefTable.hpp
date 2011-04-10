@@ -5,6 +5,7 @@
 #include "../dct/DCT.hpp"
 #include <sstream>
 #include <stack>
+#include "DctCanvas.hpp"
 
 namespace hstefan
 {
@@ -24,14 +25,13 @@ namespace hstefan
 			* @param pos Posição da Table na janela.
 			* @param width Largura da janela.
 			*/
-			CoefTable(unsigned int n, const std::vector<output_type>& dct_out, const scv::Point& pos, 
-				unsigned int width);
+			CoefTable(DctCanvas* canvas, const scv::Point& pos, unsigned int width);
 
 			/**
 			* Atualiza os coeficientes da tabela.
 			* @param coefs Novos coeficientes.
 			*/
-			inline void updateCoefs(const std::vector<output_type>& coefs)
+			inline void updateCoefs(std::vector<output_type>* coefs)
 			{
 				coef_vec = coefs;
 				initTable(); //reseta a tabela
@@ -44,8 +44,9 @@ namespace hstefan
 		private:
 			void initTable();
 
-			std::vector<output_type> coef_vec;
+			std::vector<output_type>* coef_vec;
 			std::stringstream coef_stream;
+			DctCanvas* canvas;
 
 		};
 	}//namespace gui
