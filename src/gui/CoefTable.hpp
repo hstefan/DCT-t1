@@ -36,11 +36,21 @@ namespace hstefan
 				coef_vec = coefs;
 				initTable(); //reseta a tabela
 			}
-			
+			/**
+			 * Atualiza os valores no canvas.
+			 */
 			virtual void onKeyUp(const scv::KeyEvent &evt );
-		protected:
-			void undo();
-			void storeCels();
+
+			/**
+			 * Overload da função processKey, apenas corrige o bug das callbacks de teclado e chama a função original.
+			 */
+			virtual void processKey(const scv::KeyEvent &evt);
+			
+			/**
+			 * Faz com que as callbacks de mouse sejam chamadas e chama a função original.
+			 */
+			virtual void processMouse(const scv::MouseEvent &evt);
+
 		private:
 			void initTable();
 
