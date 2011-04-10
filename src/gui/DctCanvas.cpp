@@ -14,7 +14,7 @@ namespace hstefan
 
 		void DctCanvas::setCoeficents(const std::vector<output_type>& coef)
 		{
-			dct_coef = coef;
+			dct_coef = coef; 
 			createBuffer(coef);
 		}
 
