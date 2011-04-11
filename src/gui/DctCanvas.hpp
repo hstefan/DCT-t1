@@ -42,6 +42,11 @@ namespace hstefan
 			{
 				return dct_coef;
 			}
+
+			inline void notifyUpdate()
+			{
+				createBuffer(dct_coef);
+			}
 		protected:
 			/**
 			 * Gera um buffer de vértices que serão desenhados futuramente na função render, já faz uma escala para desenhar de maneira mais visivel ao usario final.

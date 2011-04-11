@@ -42,6 +42,7 @@ namespace hstefan
 
 		void DctCanvas::createBuffer(const std::vector<output_type>& coefs)
 		{
+			vertex_buffer.clear();
 			unsigned int x = 10;
 			const unsigned int ratio = (container_width - COMPONENT_SPACING_X)/coefs.size();
 			unsigned int max = 0;
@@ -53,7 +54,7 @@ namespace hstefan
 			for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
 			{
 				vertex_buffer.push_back( vertex_type(x, 
-					((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) );
+					-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) );
 				x += ratio;
 			}
 		}

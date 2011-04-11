@@ -3,6 +3,8 @@
 #include <deque>
 #include <SCV/Kernel.h>
 #include <SCV/KeyEvent.h>
+#include <cctype>
+#include <cstring>
 
 namespace hstefan
 {
@@ -31,16 +33,46 @@ namespace hstefan
 
 		void CoefTable::onKeyUp( const scv::KeyEvent &evt )
 		{
-			output_type coef = 0;
-			for(unsigned int i = 0; i < this->getNumberOfColumns(); ++i)
+			int key = evt.getKeyCode();
+			if(isdigit(key) || iscntrl(key) || key == 102 || key == 101 || key == 103 /*[100, 103] == setas*/
+				|| key == 100 || key == '-')
 			{
-				coef_stream << getString(0, i);
-				coef_stream >> coef;
-				(*coef_vec)[i] = coef;
-				coef_stream.clear();
-				coef_stream.seekg(0);
-				coef_stream.seekp(0);
+				output_type coef = 0;
+				
+				for(unsigned int i = 0; i < this->getNumberOfColumns(); ++i)
+				{
+					coef_stream << getString(0, i);
+					coef_stream >> coef;
+					(*coef_vec)[i] = coef;
+					coef_stream.clear();
+					coef_stream.seekg(0);
+					coef_stream.seekp(0);
+				}
+				if(key == 8) //8 == BACKSPACE
+				{
+					for(unsigned int i = 0; i < getNumberOfColumns(); ++i)
+					{
+						if(getString(0,i) == "") //caso tudo seja apagado, seta o campo para 0
+							setString(0,i, "0");
+						else if(getString(0,i)[0] == '.') //caso comece com ., significa um numero invalido
+							setString(0,i, "0" + getString(0,i));
+					}
+				}
 			}
+			else if(key == '.')
+			{
+				for(unsigned int i = 0; i < getNumberOfColumns(); ++i)
+				{
+					if(strchr(getString(0, i).c_str(), '.') != 0)
+					{
+						initTable();
+						break;
+					}
+				}
+			}
+			else
+				initTable(); //reseta a tabela, pois foi digitado um valor indesejado
+			canvas->notifyUpdate();
 		}
 
 		void CoefTable::processKey( const scv::KeyEvent &evt )
@@ -61,6 +93,8 @@ namespace hstefan
 				onMouseHold(evt);
 			else if(evt.getState() == evt.up)
 				onMouseUp(evt);
+
+			Table::processMouse(evt);
 		}
 	} //namespace gui
 } //namespace hstefan
