@@ -11,7 +11,7 @@ namespace hstefan
 	namespace gui
 	{
 		CoefTable::CoefTable(DctCanvas* canvas, const scv::Point& pos, unsigned int width)
-			: Table(pos, 1, canvas->getCoefsNumber(), 1, width/canvas->getCoefsNumber()), 
+			: Table(pos, 2, canvas->getCoefsNumber(), 1, width/canvas->getCoefsNumber()), 
 			coef_vec(&canvas->getCoefs()), canvas(canvas)
 		{
 			initTable();
