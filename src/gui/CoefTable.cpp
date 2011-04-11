@@ -39,7 +39,7 @@ namespace hstefan
 			{
 				output_type coef = 0;
 				
-				for(unsigned int i = 0; i < this->getNumberOfColumns(); ++i)
+				for(int i = 0; i < this->getNumberOfColumns(); ++i)
 				{
 					coef_stream << getString(0, i);
 					coef_stream >> coef;
@@ -50,7 +50,7 @@ namespace hstefan
 				}
 				if(key == 8) //8 == BACKSPACE
 				{
-					for(unsigned int i = 0; i < getNumberOfColumns(); ++i)
+					for(int i = 0; i < getNumberOfColumns(); ++i)
 					{
 						if(getString(0,i) == "") //caso tudo seja apagado, seta o campo para 0
 							setString(0,i, "0");
@@ -61,7 +61,7 @@ namespace hstefan
 			}
 			else if(key == '.')
 			{
-				for(unsigned int i = 0; i < getNumberOfColumns(); ++i)
+				for(int i = 0; i < getNumberOfColumns(); ++i)
 				{
 					if(strchr(getString(0, i).c_str(), '.') != 0)
 					{

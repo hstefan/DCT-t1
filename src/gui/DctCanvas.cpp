@@ -9,7 +9,7 @@ namespace hstefan
 			: container_width(window_width), vertex_buffer(), 
 			scv::Canvas(scv::Point(COMPONENT_SPACING_X, COMPONENT_SPACING_Y), 
 			scv::Point(window_width - COMPONENT_SPACING_X, CANVAS_HEIGHT - COMPONENT_SPACING_Y)),
-			bg_color(1.0, 1.0, 1.0, 0.1)
+			bg_color(1.0f, 1.0f, 1.0f, 0.1f)
 		{}
 
 		void DctCanvas::setCoeficents(const std::vector<output_type>& coef)
@@ -45,7 +45,7 @@ namespace hstefan
 			vertex_buffer.clear();
 			unsigned int x = 10;
 			const unsigned int ratio = (container_width - COMPONENT_SPACING_X)/coefs.size();
-			unsigned int max = 0;
+			output_type max = 0;
 			for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
 			{
 				if (abs(*it) > max) 
@@ -54,7 +54,7 @@ namespace hstefan
 			for(std::vector<output_type>::const_iterator it = coefs.begin(); it != coefs.end(); ++it)
 			{
 				vertex_buffer.push_back( vertex_type(x, 
-					-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) );
+					(unsigned int)(-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) ));
 				x += ratio;
 			}
 		}
