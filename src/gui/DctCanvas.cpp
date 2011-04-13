@@ -21,9 +21,19 @@ namespace hstefan
 		void DctCanvas::render()
 		{
 			glClearColor(bg_color[0], bg_color[1], bg_color[2], bg_color[3]);
+			glDisable(GL_TEXTURE);
 			glClear(GL_COLOR_BUFFER_BIT);
-			glLineWidth(1.5f);
+			
+			glLineWidth(.5f);
+			glBegin(GL_LINE_STRIP);
+				glColor3f(0.f, 0.f, 0.f);
+				glVertex2i(0, CANVAS_HEIGHT/2);
+				glVertex2i(container_width, CANVAS_HEIGHT/2);
+			glEnd();
+
 			glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+			
+			glLineWidth(1.5f);
 			glBegin(GL_LINE_STRIP);
 				glColor3f(1.f, 0.f, 0.3f);
 				for(std::vector<vertex_type>::const_iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it)
@@ -40,6 +50,7 @@ namespace hstefan
 					glVertex2i((*it).first - SQUARE_LENGTH, (*it).second - SQUARE_LENGTH);
 				}
 			glEnd();
+
 			glDisable(GL_LINE_SMOOTH_HINT);
 		}
 
