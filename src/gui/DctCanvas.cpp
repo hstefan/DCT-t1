@@ -25,11 +25,14 @@ namespace hstefan
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			glLineWidth(.5f);
+			glEnable(GL_LINE_STIPPLE);
+			glLineStipple(6, 0xAAAA); //linha tracejada
 			glBegin(GL_LINE_STRIP);
 				glColor3f(0.f, 0.f, 0.f);
 				glVertex2i(0, CANVAS_HEIGHT/2);
 				glVertex2i(container_width, CANVAS_HEIGHT/2);
 			glEnd();
+			glDisable(GL_LINE_STIPPLE);
 
 			glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 			
