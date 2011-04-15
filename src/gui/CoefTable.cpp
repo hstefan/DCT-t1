@@ -12,13 +12,13 @@ namespace hstefan
 	{
 		CoefTable::CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
 			const std::vector<output_type>& output_row)
-			: scv::Table(pos, 2, signal_row.size(), 1, 100), coef_vec(output_row), signal_vec(signal_row), 
+			: scv::Table(pos, 2, signal_row.size(), 1, width/signal_row.size()), coef_vec(output_row), signal_vec(signal_row),
 			text_filter(new scv::TextFilter())
 		{
 			std::string out = "";
 			for(int i = 0; i < signal_row.size(); i++)
 			{
-				coef_stream << signal_row[i];
+				coef_stream << (unsigned int)signal_row[i];
 				coef_stream >> out;
 				setString(0, i, out);
 				coef_stream.seekg(0);
