@@ -16,7 +16,7 @@ namespace hstefan
 		/**
 		* Tabela para visualização e alteração dos coeficientes de saida.
 		*/
-		class CoefTable : public scv::Table, util::Observable
+		class CoefTable : public scv::Table, public util::Observable
 		{
 		public:
 			typedef dct::DiscreteCosineTransform::output_type output_type;

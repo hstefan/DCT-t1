@@ -57,11 +57,12 @@ void DctView::setCoefficients(const std::vector<output_type>& coef)
 	
 	std::vector<output_type>::const_iterator it = coef.begin();
 	unsigned int i = 0;
+	vertex_buff = new short int[coef.size() * 2];
 
 	for(; it != coef.end(); ++it, ++i)
 	{
 		vertex_buff[i]= x;
-		vertex_buff[++i] = (unsigned int)(-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) );
+		vertex_buff[++i] = (unsigned int)(-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2);
 		x += ratio;
 	}
 

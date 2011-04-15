@@ -32,7 +32,7 @@ namespace hstefan
 		template <class T>
 		void DctController<T>::notify()
 		{
-			const std::vector<signal_type>& sig = T->getCoefficients();
+			std::vector<signal_type> sig = observing->getSignal();
 			model->setSignal(sig);
 			view->setCoefficients(model->coefficients());
 		}

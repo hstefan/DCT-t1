@@ -4,7 +4,7 @@
 #include <SCV/Canvas.h>
 #include <vector>
 #include <utility>
-#include "../dct/DCT.hpp
+#include "../dct/DCT.hpp"
 
 namespace hstefan
 {

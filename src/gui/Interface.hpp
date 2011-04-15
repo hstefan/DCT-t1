@@ -3,8 +3,8 @@
 
 #include <SCV/Kernel.h>
 #include <SCV/ColorScheme.h>
-#include "DctCanvas.hpp"
 #include "CoefTable.hpp"
+#include "DctController.hpp"
 
 namespace hstefan
 {
@@ -21,7 +21,9 @@ namespace hstefan
 		private:
 			scv::Kernel* kernel;
 			scv::ColorScheme* color_scheme;
-			DctCanvas* dct_canvas;
+			DctController<CoefTable>* controller;
+			DctView* view;
+			DctModel* model;
 			CoefTable* coef_tab;
 		};
 	}

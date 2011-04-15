@@ -2,6 +2,7 @@
 #include "../sample/LinearGen.hpp"
 #include "../sample/RandomGen.hpp"
 #include "../dct/DCT.hpp"
+#include "DctController.hpp"
 
 namespace hstefan
 {
@@ -11,18 +12,22 @@ namespace hstefan
 		{
 			kernel = scv::Kernel::getInstance();
 			color_scheme = scv::ColorScheme::getInstance();
-			
-			dct_canvas = new DctCanvas(W_WIDTH);
 			color_scheme->loadScheme(scv::ColorScheme::windows);
-			kernel->addComponent(dct_canvas);
-
+			
 			sample::SampleGenerator* li = new sample::RandomGen();
 			li->generateSample(16);
-			std::vector<unsigned char>& f = li->getSample();
-			std::vector<double>& out = dct::DiscreteCosineTransform::fdct(f);
-			dct_canvas->setCoeficents(out);
+			
+			std::vector<dct::DiscreteCosineTransform::output_type> coef = 
+				dct::DiscreteCosineTransform::fdct(li->getSample());
 
-			coef_tab = new CoefTable(dct_canvas, scv::Point(8, dct_canvas->getHeight() + 10), W_WIDTH);
+			coef_tab = new CoefTable(scv::Point(8, 360), W_WIDTH, li->getSample(), coef);
+			model = new DctModel(li->getSample());
+			view = new DctView(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 360), coef);
+			controller = new DctController<CoefTable>(coef_tab, model, view);
+			coef_tab->registerObserver(controller);
+			coef_tab->notifyObservers();
+
+			kernel->addComponent(view);
 			kernel->addComponent(coef_tab);
 
 			kernel->setWindowSize(640, 480);
