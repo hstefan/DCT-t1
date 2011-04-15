@@ -15,12 +15,30 @@ DctView::DctView(const scv::Point& pi, const scv::Point& pf,
 
 void DctView::render()
 {
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glGenBuffers(1, &positionBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+	glColor3f(1.0f, 0.f, 0.f);
+	glLineWidth(1.5f);
 	glBufferData(GL_ARRAY_BUFFER, buff_size, vertex_buff, GL_STATIC_DRAW);
 	glVertexPointer(2, GL_SHORT, 0, 0);
 	glDrawArrays(GL_LINE_STRIP, 0, buff_len/2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glLineWidth(.5f);
+	glEnable(GL_LINE_STIPPLE);
+	glLineStipple(6, 0xAAAA); //linha tracejada
+	glBegin(GL_LINE_STRIP);
+	glColor3f(0.f, 0.f, 0.f);
+	glVertex2i(0, CANVAS_HEIGHT/2);
+	glVertex2i(width, CANVAS_HEIGHT/2);
+	glEnd();
+
+	glDisable(GL_LINE_STIPPLE);
+	glDisable(GL_LINE_SMOOTH_HINT);
 }
 
 
