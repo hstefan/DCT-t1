@@ -5,7 +5,9 @@
 #include "../dct/DCT.hpp"
 #include <sstream>
 #include <stack>
-#include "DctCanvas.hpp"
+#include "SCV/Point.h"
+#include <SCV/TextField.h>
+#include "../util/Observable.hpp"
 
 namespace hstefan
 {
@@ -14,28 +16,21 @@ namespace hstefan
 		/**
 		* Tabela para visualização e alteração dos coeficientes de saida.
 		*/
-		class CoefTable : public scv::Table
+		class CoefTable : public scv::Table, util::Observable
 		{
 		public:
 			typedef dct::DiscreteCosineTransform::output_type output_type;
+			typedef dct::DiscreteCosineTransform::signal_type signal_type;
 
 			/**
-			* @param n Numero de celulas da tabela.
-			* @param dct_out Coeficientes de saidada DCT.
 			* @param pos Posição da Table na janela.
 			* @param width Largura da janela.
+			* @param signal_row Coeficientes de entrada (linha sample).
+			* @param output_row Coeficientes de saidada DCT (linha DCT).
 			*/
-			CoefTable(DctCanvas* canvas, const scv::Point& pos, unsigned int width);
+			CoefTable::CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
+				const std::vector<output_type>& output_row);
 
-			/**
-			* Atualiza os coeficientes da tabela.
-			* @param coefs Novos coeficientes.
-			*/
-			inline void updateCoefs(std::vector<output_type>* coefs)
-			{
-				coef_vec = coefs;
-				initTable(); //reseta a tabela
-			}
 			/**
 			 * Atualiza os valores no canvas.
 			 */
@@ -51,13 +46,23 @@ namespace hstefan
 			 */
 			virtual void processMouse(const scv::MouseEvent &evt);
 
+			inline const std::vector<output_type>& getCoefficients() const
+			{
+				return coef_vec;
+			}
+
+			inline const std::vector<signal_type>& getSignal() const
+			{
+				return signal_vec;
+			}
+
 		private:
 			void initTable();
 
-			std::vector<output_type>* coef_vec;
+			std::vector<output_type> coef_vec;
+			std::vector<signal_type> signal_vec; 
 			std::stringstream coef_stream;
-			DctCanvas* canvas;
-
+			scv::TextFilter* text_filter;
 		};
 	}//namespace gui
 }//namespace hstefan

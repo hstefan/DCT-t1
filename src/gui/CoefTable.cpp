@@ -10,69 +10,48 @@ namespace hstefan
 {
 	namespace gui
 	{
-		CoefTable::CoefTable(DctCanvas* canvas, const scv::Point& pos, unsigned int width)
-			: Table(pos, 2, canvas->getCoefsNumber(), 1, width/canvas->getCoefsNumber()), 
-			coef_vec(&canvas->getCoefs()), canvas(canvas)
+		CoefTable::CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
+			const std::vector<output_type>& output_row)
+			: scv::Table(pos, 2, signal_row.size(), 1, 100), coef_vec(output_row), signal_vec(signal_row), 
+			text_filter(new scv::TextFilter())
 		{
-			initTable();
-		}
-
-		void CoefTable::initTable()
-		{
-			unsigned int cel = 0;
-			for(std::vector<output_type>::const_iterator it = coef_vec->begin(); it != coef_vec->end(); ++it)
+			std::string out = "";
+			for(int i = 0; i < signal_row.size(); i++)
 			{
-				coef_stream << (*it);
-				setString(0, cel, coef_stream.str());
-				coef_stream.clear();
+				coef_stream << signal_row[i];
+				coef_stream >> out;
+				setString(0, i, out);
 				coef_stream.seekg(0);
 				coef_stream.seekp(0);
-				++cel;
+				coef_stream.clear();
+			}
+
+			for(int i = 0; i < output_row.size(); i++)
+			{
+				coef_stream << output_row[i];
+				coef_stream >> out;
+				setString(1, i, out);
+				coef_stream.seekg(0);
+				coef_stream.seekp(0);
+				coef_stream.clear();
+			}
+
+			text_filter->denyAll();
+			text_filter->allowNumbers();
+
+			for(std::deque<std::deque<scv::TextBox*>>::iterator it =_table.begin(); it != _table.end(); ++it)
+			{
+				for(std::deque<scv::TextBox*>::iterator ij = (*it).begin(); ij != (*it).end(); ++ij)
+				{
+					(*ij)->setFilter(*text_filter);
+				}
 			}
 		}
 
 		void CoefTable::onKeyUp( const scv::KeyEvent &evt )
 		{
-			int key = evt.getKeyCode();
-			if(isdigit(key) || iscntrl(key) || key == 102 || key == 101 || key == 103 /*[100, 103] == setas*/
-				|| key == 100 || key == '-')
-			{
-				output_type coef = 0;
-				
-				for(int i = 0; i < this->getNumberOfColumns(); ++i)
-				{
-					coef_stream << getString(0, i);
-					coef_stream >> coef;
-					(*coef_vec)[i] = coef;
-					coef_stream.clear();
-					coef_stream.seekg(0);
-					coef_stream.seekp(0);
-				}
-				if(key == 8) //8 == BACKSPACE
-				{
-					for(int i = 0; i < getNumberOfColumns(); ++i)
-					{
-						if(getString(0,i) == "") //caso tudo seja apagado, seta o campo para 0
-							setString(0,i, "0");
-						else if(getString(0,i)[0] == '.') //caso comece com ., significa um numero invalido
-							setString(0,i, "0" + getString(0,i));
-					}
-				}
-			}
-			else if(key == '.')
-			{
-				for(int i = 0; i < getNumberOfColumns(); ++i)
-				{
-					if(strchr(getString(0, i).c_str(), '.') != 0)
-					{
-						initTable();
-						break;
-					}
-				}
-			}
-			else
-				initTable(); //reseta a tabela, pois foi digitado um valor indesejado
-			canvas->notifyUpdate();
+			if(text_filter->checkFilter(evt.getKeyCode()))
+				notifyObservers();
 		}
 
 		void CoefTable::processKey( const scv::KeyEvent &evt )
