@@ -55,7 +55,15 @@ namespace hstefan
 			{
 				return signal_vec;
 			}
+			/**
+			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de amostras for alterada.
+			 */
+			void onSampleRowChange(const scv::KeyEvent& evt);
 
+			/**
+			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de coeficientes da DCT for alterada.
+			 */
+			void onCoefficientsRowChange(const scv::KeyEvent& evt);
 		private:
 			void initTable();
 
