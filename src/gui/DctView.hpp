@@ -14,6 +14,7 @@ namespace hstefan
 		{
 		public:
 			typedef dct::DiscreteCosineTransform::output_type output_type;
+			typedef std::pair<unsigned int, unsigned int> vertex_type;
 			static const unsigned int COMPONENT_SPACING_X = 10;
 			static const unsigned int COMPONENT_SPACING_Y = 10;
 			static const unsigned int CANVAS_HEIGHT = 360;
@@ -25,10 +26,7 @@ namespace hstefan
 			void setCoefficients(const std::vector<output_type>& coef);
 		protected:
 			const short int width;
-			short int* vertex_buff;
-			unsigned int buff_size;
-			unsigned int buff_len;
-			GLuint id;
+			std::vector<vertex_type> vertex_buffer;
 		};
 	}
 }
