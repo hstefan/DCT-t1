@@ -22,6 +22,9 @@ namespace hstefan
 			typedef dct::DiscreteCosineTransform::output_type output_type;
 			typedef dct::DiscreteCosineTransform::signal_type signal_type;
 
+			static const int SAMPLE_ROW_NUMBER = 0;
+			static const int COEF_ROW_NUMBER = 1;
+
 			/**
 			* @param pos Posição da Table na janela.
 			* @param width Largura da janela.
@@ -55,6 +58,7 @@ namespace hstefan
 			{
 				return signal_vec;
 			}
+
 			/**
 			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de amostras for alterada.
 			 */
@@ -65,7 +69,14 @@ namespace hstefan
 			 */
 			void onCoefficientsRowChange(const scv::KeyEvent& evt);
 
+			void setCoefficientstRow(const std::vector<output_type>& dct_row);
+
 		private:
+			/**
+			 * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido.
+			 */
+			void normalizeSampleRow();
+
 			std::vector<output_type> coef_vec;
 			std::vector<signal_type> signal_vec; 
 			scv::TextFilter uinteger_filter;

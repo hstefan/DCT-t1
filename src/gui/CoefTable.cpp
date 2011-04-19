@@ -118,7 +118,12 @@ namespace hstefan
 
 		void CoefTable::onSampleRowChange(const scv::KeyEvent& evt)
 		{
-			std::cout << "alteracao no sinal" << std::endl;	
+			std::cout << "alteracao na amostra" << std::endl;
+			normalizeSampleRow();
+			signal_vec.clear();
+			for(int i = 0; i < getNumberOfColumns(); ++i)
+				signal_vec.push_back(atoi(getString(SAMPLE_ROW_NUMBER, i).c_str()));
+			notifyObservers();
 		}
 
 		void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt)
@@ -126,5 +131,29 @@ namespace hstefan
 			std::cout << "alteracao no coeficiente" << std::endl;
 		}
 
+		void CoefTable::normalizeSampleRow()
+		{
+			int tmp = 0;
+			for(int i = 0; i < getNumberOfColumns(); ++i)
+			{
+				tmp = atoi(getString(SAMPLE_ROW_NUMBER, i).c_str());
+				if(tmp > 255)
+					setString(SAMPLE_ROW_NUMBER, i, "255");
+			}
+		}
+
+		void CoefTable::setCoefficientstRow(const std::vector<output_type>& dct_row)
+		{
+			coef_vec = dct_row;
+			std::stringstream stream;
+			for(int i = 0; i < getNumberOfColumns(); ++i)
+			{
+				stream << dct_row[i];
+				setString(COEF_ROW_NUMBER, i, stream.str());
+				stream.clear();
+				stream.seekp(0);
+				stream.seekg(0);
+			}
+		}
 	} //namespace gui
 } //namespace hstefan
