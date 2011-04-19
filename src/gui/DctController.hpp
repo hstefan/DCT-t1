@@ -35,6 +35,7 @@ namespace hstefan
 			std::vector<signal_type> sig = observing->getSignal();
 			model->setSignal(sig);
 			view->setCoefficients(model->coefficients());
+			observing->setCoefficientstRow(model->coefficients());
 		}
 	}
 }
