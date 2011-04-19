@@ -37,6 +37,7 @@ namespace hstefan
 
 			text_filter->denyAll();
 			text_filter->allowNumbers();
+			text_filter->allowThese("-+.");
 			std::deque<std::deque<scv::TextBox*>>::iterator ie = _table.end();
 			std::deque<scv::TextBox*>::iterator ije;
 			for(std::deque<std::deque<scv::TextBox*>>::iterator it =_table.begin(); it != ie; ++it)
