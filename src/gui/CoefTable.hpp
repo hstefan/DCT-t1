@@ -30,7 +30,6 @@ namespace hstefan
 			*/
 			CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
 				const std::vector<output_type>& output_row);
-			~CoefTable();
 
 			/**
 			 * Atualiza os valores no canvas.
@@ -69,7 +68,8 @@ namespace hstefan
 		private:
 			std::vector<output_type> coef_vec;
 			std::vector<signal_type> signal_vec; 
-			scv::TextFilter* text_filter;
+			scv::TextFilter uinteger_filter;
+			scv::TextFilter double_filter;
 		};
 	}//namespace gui
 }//namespace hstefan

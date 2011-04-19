@@ -15,7 +15,7 @@ namespace hstefan
 		CoefTable::CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
 			const std::vector<output_type>& output_row)
 			: scv::Table(pos, 2, signal_row.size(), 1, width/signal_row.size()), coef_vec(output_row), signal_vec(signal_row),
-			text_filter(new scv::TextFilter())
+			uinteger_filter(), double_filter()
 		{
 			std::ostringstream stream;
 
@@ -35,29 +35,31 @@ namespace hstefan
 				stream.clear();
 			}
 
-			text_filter->denyAll();
-			text_filter->allowNumbers();
-			text_filter->allowThese("-+.");
-			std::deque<std::deque<scv::TextBox*>>::iterator ie = _table.end();
-			std::deque<scv::TextBox*>::iterator ije;
-			for(std::deque<std::deque<scv::TextBox*>>::iterator it =_table.begin(); it != ie; ++it)
-			{
-				ije = (*it).end();
-				for(std::deque<scv::TextBox*>::iterator ij = (*it).begin(); ij != ije; ++ij)
-					(*ij)->setFilter(*text_filter);
-			}
-		}
+			uinteger_filter.denyAll();
+			uinteger_filter.allowNumbers();
+	
+			std::deque<std::deque<scv::TextBox*>>::iterator table_begin_iter = _table.begin();
+			std::deque<std::deque<scv::TextBox*>>::iterator table_end_iter = _table.end();
+			
+			std::deque<scv::TextBox*>::iterator row_iter, row_end_it;
 
-		CoefTable::~CoefTable()
-		{
-			delete text_filter;
+			for(row_end_it = (*table_begin_iter).begin(), row_iter = (*table_begin_iter).end(); row_end_it != row_iter; ++row_end_it) //adciona filtro que permite que apenas numeros sejam inseridos
+				(*row_end_it)->setFilter(uinteger_filter);
+
+			double_filter.denyAll();
+			double_filter.allowNumbers();
+			double_filter.allowThese("-."); 
+			
+			++table_begin_iter;
+			for(row_end_it = (*table_begin_iter).begin(), row_iter = (*table_begin_iter).end(); row_end_it != row_iter; ++row_end_it) //adciona filtro que permite o sinal negativo e pontos
+				(*row_end_it)->setFilter(double_filter);
 		}
 
 		void CoefTable::onKeyUp( const scv::KeyEvent &evt )
 		{
 			scv::Table::onKeyUp(evt);
 
-			if(text_filter->checkFilter(evt.getKeyCode()))
+			if(uinteger_filter.checkFilter(evt.getKeyCode()) || double_filter.checkFilter(evt.getKeyCode()))
 			{
 				unsigned int row_updated = 0;
 				int col_number = getNumberOfColumns();
