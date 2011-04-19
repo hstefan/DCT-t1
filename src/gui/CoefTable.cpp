@@ -22,16 +22,16 @@ namespace hstefan
 			for(unsigned int i = 0; i < signal_row.size(); i++)
 			{
 				stream << (unsigned int)signal_row[i];
-				setString(0, i, stream.str());
-				stream.seekp(0);
+				setString(SAMPLE_ROW_NUMBER, i, stream.str());
+				stream.str("");
 				stream.clear();
 			}
 
 			for(unsigned int i = 0; i < output_row.size(); i++)
 			{
 				stream << output_row[i];
-				setString(1, i, stream.str());
-				stream.seekp(0);
+				setString(COEF_ROW_NUMBER, i, stream.str());
+				stream.str("");
 				stream.clear();
 			}
 
@@ -73,7 +73,7 @@ namespace hstefan
 						onSampleRowChange(evt);
 						break;
 					}
-					stream.seekp(0);
+					stream.str("");
 					stream.clear();
 				}
 
@@ -88,7 +88,7 @@ namespace hstefan
 						onCoefficientsRowChange(evt);
 						break;
 					}
-					stream.seekp(0);
+					stream.str("");
 					stream.clear();
 				}
 			}
@@ -144,15 +144,15 @@ namespace hstefan
 
 		void CoefTable::setCoefficientstRow(const std::vector<output_type>& dct_row)
 		{
+			coef_vec.clear();
 			coef_vec = dct_row;
-			std::stringstream stream;
+			std::ostringstream stream;
 			for(int i = 0; i < getNumberOfColumns(); ++i)
 			{
 				stream << dct_row[i];
 				setString(COEF_ROW_NUMBER, i, stream.str());
+				stream.str("");
 				stream.clear();
-				stream.seekp(0);
-				stream.seekg(0);
 			}
 		}
 	} //namespace gui
