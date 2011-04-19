@@ -28,8 +28,9 @@ namespace hstefan
 			* @param signal_row Coeficientes de entrada (linha sample).
 			* @param output_row Coeficientes de saidada DCT (linha DCT).
 			*/
-			CoefTable::CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
+			CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
 				const std::vector<output_type>& output_row);
+			~CoefTable();
 
 			/**
 			 * Atualiza os valores no canvas.
@@ -64,12 +65,10 @@ namespace hstefan
 			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de coeficientes da DCT for alterada.
 			 */
 			void onCoefficientsRowChange(const scv::KeyEvent& evt);
-		private:
-			void initTable();
 
+		private:
 			std::vector<output_type> coef_vec;
 			std::vector<signal_type> signal_vec; 
-			std::stringstream coef_stream;
 			scv::TextFilter* text_filter;
 		};
 	}//namespace gui

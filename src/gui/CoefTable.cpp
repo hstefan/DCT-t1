@@ -5,6 +5,8 @@
 #include <SCV/KeyEvent.h>
 #include <cctype>
 #include <cstring>
+#include <algorithm>
+#include <SCV/TextBox.h>
 
 namespace hstefan
 {
@@ -15,43 +17,78 @@ namespace hstefan
 			: scv::Table(pos, 2, signal_row.size(), 1, width/signal_row.size()), coef_vec(output_row), signal_vec(signal_row),
 			text_filter(new scv::TextFilter())
 		{
-			std::string out = "";
-			for(int i = 0; i < signal_row.size(); i++)
+			std::ostringstream stream;
+
+			for(unsigned int i = 0; i < signal_row.size(); i++)
 			{
-				coef_stream << (unsigned int)signal_row[i];
-				coef_stream >> out;
-				setString(0, i, out);
-				coef_stream.seekg(0);
-				coef_stream.seekp(0);
-				coef_stream.clear();
+				stream << (unsigned int)signal_row[i];
+				setString(0, i, stream.str());
+				stream.seekp(0);
+				stream.clear();
 			}
 
-			for(int i = 0; i < output_row.size(); i++)
+			for(unsigned int i = 0; i < output_row.size(); i++)
 			{
-				coef_stream << output_row[i];
-				coef_stream >> out;
-				setString(1, i, out);
-				coef_stream.seekg(0);
-				coef_stream.seekp(0);
-				coef_stream.clear();
+				stream << output_row[i];
+				setString(1, i, stream.str());
+				stream.seekp(0);
+				stream.clear();
 			}
 
 			text_filter->denyAll();
 			text_filter->allowNumbers();
-
-			for(std::deque<std::deque<scv::TextBox*>>::iterator it =_table.begin(); it != _table.end(); ++it)
+			std::deque<std::deque<scv::TextBox*>>::iterator ie = _table.end();
+			std::deque<scv::TextBox*>::iterator ije;
+			for(std::deque<std::deque<scv::TextBox*>>::iterator it =_table.begin(); it != ie; ++it)
 			{
-				for(std::deque<scv::TextBox*>::iterator ij = (*it).begin(); ij != (*it).end(); ++ij)
-				{
+				ije = (*it).end();
+				for(std::deque<scv::TextBox*>::iterator ij = (*it).begin(); ij != ije; ++ij)
 					(*ij)->setFilter(*text_filter);
-				}
 			}
+		}
+
+		CoefTable::~CoefTable()
+		{
+			delete text_filter;
 		}
 
 		void CoefTable::onKeyUp( const scv::KeyEvent &evt )
 		{
+			scv::Table::onKeyUp(evt);
+
 			if(text_filter->checkFilter(evt.getKeyCode()))
-				notifyObservers();
+			{
+				unsigned int row_updated = 0;
+				int col_number = getNumberOfColumns();
+				std::ostringstream stream;
+
+				for(int i = 0; i < col_number; ++i)
+				{
+					stream << (unsigned int)signal_vec[i];
+					if(getString(0, i) != stream.str())
+					{
+						onSampleRowChange(evt);
+						break;
+					}
+					stream.seekp(0);
+					stream.clear();
+				}
+
+				stream.seekp(0);
+				stream.clear();
+				
+				for(int i = 0; i < col_number; ++i)
+				{
+					stream << coef_vec[i];
+					if(getString(1, i) != stream.str())
+					{
+						onCoefficientsRowChange(evt);
+						break;
+					}
+					stream.seekp(0);
+					stream.clear();
+				}
+			}
 		}
 
 		void CoefTable::processKey( const scv::KeyEvent &evt )
@@ -75,5 +112,16 @@ namespace hstefan
 
 			Table::processMouse(evt);
 		}
+
+		void CoefTable::onSampleRowChange(const scv::KeyEvent& evt)
+		{
+			std::cout << "alteracao no sinal" << std::endl;	
+		}
+
+		void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt)
+		{
+			std::cout << "alteracao no coeficiente" << std::endl;
+		}
+
 	} //namespace gui
 } //namespace hstefan
