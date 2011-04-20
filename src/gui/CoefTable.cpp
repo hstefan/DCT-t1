@@ -137,6 +137,8 @@ namespace hstefan
 					setString(COEF_ROW_NUMBER, cel_number, stream.str());
 				}
 			}
+			coef_vec[cel_number] = atoi(getString(COEF_ROW_NUMBER, cel_number).c_str());
+			notifyObservers();
 		}
 
 		void CoefTable::normalizeSampleRow()
