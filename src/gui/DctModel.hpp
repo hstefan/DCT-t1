@@ -21,8 +21,10 @@ namespace hstefan
 			const std::vector<output_type>& coefficients() const;
 
 			void setSignal(const std::vector<signal_type>& signal);
+			void setOutput(const std::vector<output_type>& output);
 		private:
 			void applyDct();
+			void applyIdct();
 		private:
 			std::vector<signal_type> m_signal;
 			std::vector<output_type> m_output;

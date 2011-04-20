@@ -29,3 +29,15 @@ void DctModel::applyDct()
 	m_output.resize(m_signal.size());
 	m_output = dct::DiscreteCosineTransform::fdct(m_signal);
 }
+
+void DctModel::setOutput(const std::vector<output_type>& output)
+{
+	m_output = output;
+	applyIdct();
+}
+
+void DctModel::applyIdct()
+{
+	m_signal.resize(m_output.size());
+	m_signal = dct::DiscreteCosineTransform::idct(m_output);
+}
