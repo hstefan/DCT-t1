@@ -127,13 +127,15 @@ namespace hstefan
 
 		void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt,  unsigned int cel_number)
 		{
-			if(evt.getKeyCode() == '.')
+			if(evt.getKeyCode() == '.' || evt.getKeyCode() == '-')
 			{
 				std::string str_cel = getString(COEF_ROW_NUMBER, cel_number);
-			}
-			else if(evt.getKeyCode() == '-')
-			{
-
+				if(std::count(str_cel.begin(), str_cel.end(), evt.getKeyCode()) > 1)
+				{
+					std::ostringstream stream;
+					stream << coef_vec[cel_number];
+					setString(COEF_ROW_NUMBER, cel_number, stream.str());
+				}
 			}
 		}
 
