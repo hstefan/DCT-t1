@@ -70,7 +70,7 @@ namespace hstefan
 					stream << (unsigned int)signal_vec[i];
 					if(getString(0, i) != stream.str())
 					{
-						onSampleRowChange(evt);
+						onSampleRowChange(evt, (unsigned int)i);
 						break;
 					}
 					stream.str("");
@@ -85,7 +85,7 @@ namespace hstefan
 					stream << coef_vec[i];
 					if(getString(1, i) != stream.str())
 					{
-						onCoefficientsRowChange(evt);
+						onCoefficientsRowChange(evt, (unsigned int)i);
 						break;
 					}
 					stream.str("");
@@ -96,12 +96,12 @@ namespace hstefan
 
 		void CoefTable::processKey( const scv::KeyEvent &evt )
 		{
+			Table::processKey(evt);
+
 			if(evt.getState() == evt.up)
 				onKeyUp(evt);
 			else if(evt.getState() == evt.down)
 				onKeyPressed(evt);
-
-			Table::processKey(evt);
 		}
 
 		void CoefTable::processMouse(const scv::MouseEvent &evt)
@@ -116,9 +116,8 @@ namespace hstefan
 			Table::processMouse(evt);
 		}
 
-		void CoefTable::onSampleRowChange(const scv::KeyEvent& evt)
+		void CoefTable::onSampleRowChange(const scv::KeyEvent& evt, unsigned int cel_number)
 		{
-			std::cout << "alteracao na amostra" << std::endl;
 			normalizeSampleRow();
 			signal_vec.clear();
 			for(int i = 0; i < getNumberOfColumns(); ++i)
@@ -126,9 +125,16 @@ namespace hstefan
 			notifyObservers();
 		}
 
-		void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt)
+		void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt,  unsigned int cel_number)
 		{
-			std::cout << "alteracao no coeficiente" << std::endl;
+			if(evt.getKeyCode() == '.')
+			{
+				std::string str_cel = getString(COEF_ROW_NUMBER, cel_number);
+			}
+			else if(evt.getKeyCode() == '-')
+			{
+
+			}
 		}
 
 		void CoefTable::normalizeSampleRow()
@@ -151,7 +157,7 @@ namespace hstefan
 			{
 				stream << dct_row[i];
 				setString(COEF_ROW_NUMBER, i, stream.str());
-				stream.str("");
+				stream.str(""); 
 				stream.clear();
 			}
 		}

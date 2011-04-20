@@ -62,12 +62,12 @@ namespace hstefan
 			/**
 			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de amostras for alterada.
 			 */
-			void onSampleRowChange(const scv::KeyEvent& evt);
+			void onSampleRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
 
 			/**
 			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de coeficientes da DCT for alterada.
 			 */
-			void onCoefficientsRowChange(const scv::KeyEvent& evt);
+			void onCoefficientsRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
 
 			void setCoefficientstRow(const std::vector<output_type>& dct_row);
 
