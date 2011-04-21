@@ -154,14 +154,28 @@ namespace hstefan
 
 		void CoefTable::setCoefficientstRow(const std::vector<output_type>& dct_row)
 		{
-			coef_vec.clear();
-			coef_vec = dct_row;
+			coef_vec.resize(dct_row.size());
 			std::ostringstream stream;
 			for(int i = 0; i < getNumberOfColumns(); ++i)
 			{
+				coef_vec[i] = dct_row[i];
 				stream << dct_row[i];
 				setString(COEF_ROW_NUMBER, i, stream.str());
 				stream.str(""); 
+				stream.clear();
+			}
+		}
+
+		void CoefTable::setSampleRow(const std::vector<signal_type>& signal_row)
+		{
+			signal_vec.resize(signal_row.size());
+			std::ostringstream stream;
+			for(int i = 0; i < getNumberOfColumns(); ++i)
+			{
+				signal_vec[i] = signal_row[i];
+				stream << (unsigned int)signal_vec[i];
+				setString(SAMPLE_ROW_NUMBER, i, stream.str());
+				stream.str("");
 				stream.clear();
 			}
 		}

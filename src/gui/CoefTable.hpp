@@ -70,6 +70,7 @@ namespace hstefan
 			void onCoefficientsRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
 
 			void setCoefficientstRow(const std::vector<output_type>& dct_row);
+			void setSampleRow(const std::vector<signal_type>& signal_row);
 
 		private:
 			/**
