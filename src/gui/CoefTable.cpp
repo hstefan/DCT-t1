@@ -179,5 +179,10 @@ namespace hstefan
 				stream.clear();
 			}
 		}
+
+		void CoefTable::onSampleRowChange()
+		{
+			notifyObservers();
+		}
 	} //namespace gui
 } //namespace hstefan

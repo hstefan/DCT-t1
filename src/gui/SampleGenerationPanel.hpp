@@ -7,6 +7,9 @@
 #include <SCV/ComboBox.h>
 #include <SCV/Label.h>
 #include "CoefTable.hpp"
+#include "../sample/LinearGen.hpp"
+#include "../sample/RandomGen.hpp"
+#include <vector>
 
 namespace hstefan
 {
@@ -39,7 +42,26 @@ namespace hstefan
 
 			void generateSample()
 			{
+				std::string sample_type = sample_box.getValue();
+				std::string sample_len = len_box.getValue();
 
+				if(sample_type != "" && sample_len != "")
+				{
+					unsigned int sz = atoi(sample_len.c_str());
+					sample::SampleGenerator* sample_gen = 0;
+					if(sample_type == "Aleatoria")
+						sample_gen = new sample::RandomGen();
+					else if (sample_type == "Linear")
+						sample_gen = new sample::LinearGen();
+					if(sample_gen != 0)
+					{
+						sample_gen->generateSample(sz);
+						std::vector<sample::SampleGenerator::signal_type> signal(sample_gen->getSample());
+						table_ptr->setSampleRow(signal);
+						table_ptr->onSampleRowChange();
+						delete sample_gen;
+					}
+				}
 			}
 		private:
 			friend class SampleButton;
