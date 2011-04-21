@@ -33,9 +33,22 @@ namespace hstefan
 		void DctController<T>::notify()
 		{
 			std::vector<signal_type> sig = observing->getSignal();
-			model->setSignal(sig);
-			view->setCoefficients(model->coefficients());
-			observing->setCoefficientstRow(model->coefficients());
+			if(sig != model->signal())
+			{
+				model->setSignal(sig);
+				view->setCoefficients(model->coefficients());
+				observing->setCoefficientstRow(model->coefficients());
+			}
+			else
+			{
+				std::vector<output_type> out = observing->getCoefficients();
+				if(out != model->coefficients())
+				{
+					model->setOutput(out);
+					view->setCoefficients(model->coefficients());
+					observing->setSampleRow(model->signal());
+				}
+			}
 		}
 	}
 }
