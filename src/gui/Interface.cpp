@@ -16,7 +16,7 @@ namespace hstefan
 			
 			sample::SampleGenerator* li = new sample::RandomGen();
 			li->generateSample(16);
-			
+
 			std::vector<dct::DiscreteCosineTransform::output_type> coef = 
 				dct::DiscreteCosineTransform::fdct(li->getSample());
 
@@ -30,7 +30,10 @@ namespace hstefan
 			kernel->addComponent(view);
 			kernel->addComponent(coef_tab);
 
-			kernel->setWindowSize(640, 480);
+			sample_panel = new SampleGenerationPanel(scv::Point(0, 440), 300, 0);
+			kernel->addComponent(sample_panel);
+
+			kernel->setWindowSize(640, 640);
 			kernel->setWindowTitle("Discrete Cosine Transform - T1");
 
 			kernel->run();

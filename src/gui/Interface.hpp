@@ -5,6 +5,7 @@
 #include <SCV/ColorScheme.h>
 #include "CoefTable.hpp"
 #include "DctController.hpp"
+#include "SampleGenerationPanel.hpp"
 
 namespace hstefan
 {
@@ -25,6 +26,7 @@ namespace hstefan
 			DctView* view;
 			DctModel* model;
 			CoefTable* coef_tab;
+			SampleGenerationPanel* sample_panel;
 		};
 	}
 }

@@ -20,13 +20,13 @@ namespace hstefan
 			static const unsigned int PANEL_HEIGHT = 50;
 			static const unsigned int W_SPACING = 5;
 			static const unsigned int H_SPACING = 5;
-			static const unsigned int COMBO_WIDTH = 40;
+			static const unsigned int COMBO_WIDTH = 120;
 		protected:
 			class SampleButton : public scv::Button
 			{ 
 			public:
-				SampleButton(SampleGenerationPanel* pan)
-					: scv::Button(scv::Point(W_SPACING, pan->len_box.getHeight()*3), pan->getWidth() - 2*H_SPACING, "Gerar Amostra"), panel(pan)
+				SampleButton(SampleGenerationPanel* pan, unsigned int y, unsigned int w)
+					: scv::Button(scv::Point(W_SPACING, y), w, "Gerar Amostra"), panel(pan)
 				{
 				}
 				virtual void onMouseClick( const scv::MouseEvent &evt )
