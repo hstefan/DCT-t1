@@ -12,7 +12,7 @@ namespace hstefan
 		{
 			kernel = scv::Kernel::getInstance();
 			color_scheme = scv::ColorScheme::getInstance();
-			color_scheme->loadScheme(scv::ColorScheme::windows);
+			color_scheme->loadScheme(scv::ColorScheme::osx);
 			
 			sample::SampleGenerator* li = new sample::RandomGen();
 			li->generateSample(16);
