@@ -30,10 +30,10 @@ namespace hstefan
 			kernel->addComponent(view);
 			kernel->addComponent(coef_tab);
 
-			sample_panel = new SampleGenerationPanel(scv::Point(0, 440), 300, 0);
+			sample_panel = new SampleGenerationPanel(scv::Point(W_WIDTH/2 - 85, 430), 180, 0);
 			kernel->addComponent(sample_panel);
 
-			kernel->setWindowSize(640, 640);
+			kernel->setWindowSize(640, 525);
 			kernel->setWindowTitle("Discrete Cosine Transform - T1");
 
 			kernel->run();

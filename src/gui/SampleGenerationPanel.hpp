@@ -17,7 +17,7 @@ namespace hstefan
 		public:
 			SampleGenerationPanel(scv::Point pi, unsigned int width, CoefTable* table);
 
-			static const unsigned int PANEL_HEIGHT = 150;
+			static const unsigned int PANEL_HEIGHT = 85;
 			static const unsigned int W_SPACING = 5;
 			static const unsigned int H_SPACING = 5;
 			static const unsigned int COMBO_WIDTH = 120;
