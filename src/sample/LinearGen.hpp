@@ -15,16 +15,18 @@ namespace hstefan
 		class LinearGen : public SampleGenerator
 		{
 		private:
-			static const int MAX_RATE = 20;
+			static const int MAX_RATE = 30;
 		public:
 			void generateSample(unsigned int n) 
 			{
-				const signal_type rate = (signal_type) rand() % MAX_RATE;
+				const signal_type rate = ((signal_type) (std::abs(rand()) + 1)) % MAX_RATE;
  				signal_type start = (signal_type)rand() % (std::numeric_limits<signal_type>::max() - n - MAX_RATE);
 				signal.resize(n);
-				signal[0] = start;
-				for(unsigned int i = 1; i < n; ++i) 
-					signal[i] = start + rate;
+				for(unsigned int i = 0; i < n; ++i)
+				{
+					signal[i] = start;
+					start += rate;
+				}
 			}
 
 		};
