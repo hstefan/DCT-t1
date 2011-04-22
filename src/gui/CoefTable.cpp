@@ -184,5 +184,38 @@ namespace hstefan
 		{
 			notifyObservers();
 		}
+
+		void CoefTable::resizeTable()
+		{
+			std::deque<std::deque<scv::TextBox*>>::iterator rows_iter = _table.begin();
+			std::deque<std::deque<scv::TextBox*>>::iterator rows_end_iter = _table.end();
+
+			std::deque<scv::TextBox*>::reverse_iterator rev_iter_column;
+			std::deque<scv::TextBox*>::reverse_iterator rev_iter_begin;
+
+			int diff = getNumberOfColumns() - signal_vec.size();
+			int left = diff;
+			if(diff < 0)
+			{
+				for(; rows_iter != rows_end_iter; ++rows_iter)
+				{
+					left = std::abs(diff);
+					for(rev_iter_column = (*rows_iter).rend(), rev_iter_begin = (*rows_iter).rbegin(); 
+						rev_iter_column != rev_iter_begin; ++rev_iter_column)
+					{
+						(*rows_iter).erase(rev_iter_column.base());	
+						left--;
+					}
+				}
+			}
+
+			else if(diff > 0)
+			{
+				while(left-- >= 0)
+				{
+
+				}
+			}
+		}
 	} //namespace gui
 } //namespace hstefan

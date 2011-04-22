@@ -79,6 +79,7 @@ namespace hstefan
 			 * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido.
 			 */
 			void normalizeSampleRow();
+			void resizeTable();
 
 			std::vector<output_type> coef_vec;
 			std::vector<signal_type> signal_vec; 
