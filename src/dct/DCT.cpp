@@ -49,7 +49,6 @@ namespace hstefan
 				out = floor(out + .5); //arredonda o numero
 				res.push_back((signal_type)out);
 			}
-			std::cout << std::endl;
 			return res;
 		}
 	}
