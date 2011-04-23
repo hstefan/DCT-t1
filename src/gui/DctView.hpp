@@ -17,7 +17,6 @@ namespace hstefan
 			typedef std::pair<unsigned int, unsigned int> vertex_type;
 			static const unsigned int COMPONENT_SPACING_X = 10;
 			static const unsigned int COMPONENT_SPACING_Y = 10;
-			static const unsigned int CANVAS_HEIGHT = 200;
 			static const unsigned int SQUARE_LENGTH = 3;
 
 			DctView(const scv::Point& pi, const scv::Point& pf, 
@@ -25,14 +24,13 @@ namespace hstefan
 			void render();
 			void setCoefficients(const std::vector<T>& coef);
 		protected:
-			const short int width;
 			std::vector<vertex_type> vertex_buffer;
 		};
 
 		template <class T>
 		DctView<T>::DctView(const scv::Point& pi, const scv::Point& pf, 
 			const std::vector<T>& coef)
-			: scv::Canvas(pi, pf), vertex_buffer(), width(std::abs(pf.x - pi.x))
+			: scv::Canvas(pi, pf), vertex_buffer()
 		{
 			setCoefficients(coef);
 		}
@@ -67,8 +65,8 @@ namespace hstefan
 			glLineStipple(6, 0xAAAA); //linha tracejada
 			glBegin(GL_LINE_STRIP);
 			glColor3f(0.f, 0.f, 0.f);
-			glVertex2i(0, CANVAS_HEIGHT/2);
-			glVertex2i(width, CANVAS_HEIGHT/2);
+			glVertex2i(0, getHeight()/2);
+			glVertex2i(getWidth(), getHeight()/2);
 			glEnd();
 
 			glDisable(GL_LINE_STIPPLE);
@@ -80,7 +78,7 @@ namespace hstefan
 		{
 			vertex_buffer.clear();
 			unsigned int x = 10;
-			const unsigned int ratio = (width - COMPONENT_SPACING_X)/coef.size();
+			const unsigned int ratio = (getWidth() - COMPONENT_SPACING_X)/coef.size();
 			T max = 0;
 			for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
 			{
@@ -90,7 +88,7 @@ namespace hstefan
 			for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
 			{
 				vertex_buffer.push_back( vertex_type(x, 
-					(unsigned int)(-((CANVAS_HEIGHT/2.f)/(float)max) * (*it) + CANVAS_HEIGHT/2) ));
+					(unsigned int)(-((getHeight()/2.f)/(float)max) * (*it) + getHeight()/2) ));
 				x += ratio;
 			}
 		}
