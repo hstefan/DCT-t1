@@ -215,6 +215,7 @@ namespace hstefan
 			}
 			else if(diff > 0)
 			{
+				index = 0;
 				while(index < getNumberOfColumns())
 				{
 					_table[0][index]->setFilter(uinteger_filter);
