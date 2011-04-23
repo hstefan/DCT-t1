@@ -3,14 +3,14 @@
 
 namespace hstefan
 {
-	namespace util
-	{
-		class Listener
-		{
-		public:
-			virtual void notify() = 0;
-		};
-	}
+   namespace util
+   {
+      class Listener
+      {
+      public:
+         virtual void notify() = 0;
+      };
+   }
 }
 
 #endif

@@ -6,17 +6,17 @@
 
 namespace hstefan
 {
-	namespace util
-	{
-		class Observable
-		{
-		public:
-			void registerObserver(Listener* listener);
-			void removeObserver(Listener* listener);
-			void notifyObservers();
-		protected:
-			std::list<Listener*> observers;
-		};
-	}
+   namespace util
+   {
+      class Observable
+      {
+      public:
+         void registerObserver(Listener* listener);
+         void removeObserver(Listener* listener);
+         void notifyObservers();
+      protected:
+         std::list<Listener*> observers;
+      };
+   }
 }
 #endif

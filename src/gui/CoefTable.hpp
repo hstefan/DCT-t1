@@ -11,82 +11,82 @@
 
 namespace hstefan
 {
-	namespace gui
-	{
-		/**
-		* Tabela para visualização e alteração dos coeficientes de saida.
-		*/
-		class CoefTable : public scv::Table, public util::Observable
-		{
-		public:
-			typedef dct::DiscreteCosineTransform::output_type output_type;
-			typedef dct::DiscreteCosineTransform::signal_type signal_type;
+   namespace gui
+   {
+      /**
+      * Tabela para visualização e alteração dos coeficientes de saida.
+      */
+      class CoefTable : public scv::Table, public util::Observable
+      {
+      public:
+         typedef dct::DiscreteCosineTransform::output_type output_type;
+         typedef dct::DiscreteCosineTransform::signal_type signal_type;
 
-			static const int SAMPLE_ROW_NUMBER = 0;
-			static const int COEF_ROW_NUMBER = 1;
+         static const int SAMPLE_ROW_NUMBER = 0;
+         static const int COEF_ROW_NUMBER = 1;
 
-			/**
-			* @param pos Posição da Table na janela.
-			* @param width Largura da janela.
-			* @param signal_row Coeficientes de entrada (linha sample).
-			* @param output_row Coeficientes de saidada DCT (linha DCT).
-			*/
-			CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
-				const std::vector<output_type>& output_row);
+         /**
+         * @param pos Posição da Table na janela.
+         * @param width Largura da janela.
+         * @param signal_row Coeficientes de entrada (linha sample).
+         * @param output_row Coeficientes de saidada DCT (linha DCT).
+         */
+         CoefTable(const scv::Point& pos, unsigned int width, const std::vector<signal_type>& signal_row,
+            const std::vector<output_type>& output_row);
 
-			/**
-			 * Atualiza os valores no canvas.
-			 */
-			virtual void onKeyUp(const scv::KeyEvent &evt );
+         /**
+         * Atualiza os valores no canvas.
+         */
+         virtual void onKeyUp(const scv::KeyEvent &evt );
 
-			/**
-			 * Overload da função processKey, apenas corrige o bug das callbacks de teclado e chama a função original.
-			 */
-			virtual void processKey(const scv::KeyEvent &evt);
-			
-			/**
-			 * Faz com que as callbacks de mouse sejam chamadas e chama a função original.
-			 */
-			virtual void processMouse(const scv::MouseEvent &evt);
+         /**
+         * Overload da função processKey, apenas corrige o bug das callbacks de teclado e chama a função original.
+         */
+         virtual void processKey(const scv::KeyEvent &evt);
 
-			inline const std::vector<output_type>& getCoefficients() const
-			{
-				return coef_vec;
-			}
+         /**
+         * Faz com que as callbacks de mouse sejam chamadas e chama a função original.
+         */
+         virtual void processMouse(const scv::MouseEvent &evt);
 
-			inline const std::vector<signal_type>& getSignal() const
-			{
-				return signal_vec;
-			}
+         inline const std::vector<output_type>& getCoefficients() const
+         {
+            return coef_vec;
+         }
 
-			/**
-			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de amostras for alterada.
-			 */
-			void onSampleRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
+         inline const std::vector<signal_type>& getSignal() const
+         {
+            return signal_vec;
+         }
 
-			/**
-			 * Realiza ações necessárias para o bom funcionamente do programa quando a linha de coeficientes da DCT for alterada.
-			 */
-			void onCoefficientsRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
+         /**
+         * Realiza ações necessárias para o bom funcionamente do programa quando a linha de amostras for alterada.
+         */
+         void onSampleRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
 
-			void onSampleRowChange();
+         /**
+         * Realiza ações necessárias para o bom funcionamente do programa quando a linha de coeficientes da DCT for alterada.
+         */
+         void onCoefficientsRowChange(const scv::KeyEvent& evt, unsigned int cel_number);
 
-			void setCoefficientstRow(const std::vector<output_type>& dct_row);
-			void setSampleRow(const std::vector<signal_type>& signal_row);
+         void onSampleRowChange();
 
-		private:
-			/**
-			 * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido.
-			 */
-			void normalizeSampleRow();
-			void resizeTable();
+         void setCoefficientstRow(const std::vector<output_type>& dct_row);
+         void setSampleRow(const std::vector<signal_type>& signal_row);
 
-			std::vector<output_type> coef_vec;
-			std::vector<signal_type> signal_vec; 
-			scv::TextFilter uinteger_filter;
-			scv::TextFilter double_filter;
-		};
-	}//namespace gui
+      private:
+         /**
+         * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido.
+         */
+         void normalizeSampleRow();
+         void resizeTable();
+
+         std::vector<output_type> coef_vec;
+         std::vector<signal_type> signal_vec; 
+         scv::TextFilter uinteger_filter;
+         scv::TextFilter double_filter;
+      };
+   }//namespace gui
 }//namespace hstefan
 
 #endif

@@ -9,30 +9,30 @@
 
 namespace hstefan
 {
-	namespace gui
-	{
-		class Interface
-		{
-		public:
-			Interface();
+   namespace gui
+   {
+      class Interface
+      {
+      public:
+         Interface();
 
-			static const unsigned int W_WIDTH = 640;
-			static const unsigned int W_HEIGHT = 480;
+         static const unsigned int W_WIDTH = 640;
+         static const unsigned int W_HEIGHT = 480;
 
-			typedef dct::DiscreteCosineTransform::signal_type signal_type;
-			typedef dct::DiscreteCosineTransform::output_type output_type;
+         typedef dct::DiscreteCosineTransform::signal_type signal_type;
+         typedef dct::DiscreteCosineTransform::output_type output_type;
 
-		private:
-			scv::Kernel* kernel;
-			scv::ColorScheme* color_scheme;
-			DctController<CoefTable>* controller;
-			DctView<output_type>* view;
-			DctView<signal_type>* sig_view;
-			DctModel* model;
-			CoefTable* coef_tab;
-			SampleGenerationPanel* sample_panel;
-		};
-	}
+      private:
+         scv::Kernel* kernel;
+         scv::ColorScheme* color_scheme;
+         DctController<CoefTable>* controller;
+         DctView<output_type>* view;
+         DctView<signal_type>* sig_view;
+         DctModel* model;
+         CoefTable* coef_tab;
+         SampleGenerationPanel* sample_panel;
+      };
+   }
 }
 
 #endif

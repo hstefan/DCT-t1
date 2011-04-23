@@ -6,43 +6,43 @@
 
 namespace hstefan
 {
-	namespace gui
-	{
-		Interface::Interface()
-		{
-			kernel = scv::Kernel::getInstance();
-			color_scheme = scv::ColorScheme::getInstance();
-			color_scheme->loadScheme(scv::ColorScheme::osx);
-			
-			sample::SampleGenerator* li = new sample::RandomGen();
-			li->generateSample(16);
+   namespace gui
+   {
+      Interface::Interface()
+      {
+         kernel = scv::Kernel::getInstance();
+         color_scheme = scv::ColorScheme::getInstance();
+         color_scheme->loadScheme(scv::ColorScheme::osx);
 
-			std::vector<dct::DiscreteCosineTransform::output_type> coef = 
-				dct::DiscreteCosineTransform::fdct(li->getSample());
+         sample::SampleGenerator* li = new sample::RandomGen();
+         li->generateSample(16);
 
-			coef_tab = new CoefTable(scv::Point(8, 220), W_WIDTH, li->getSample(), coef);
-			model = new DctModel(li->getSample());
-			view = new DctView<output_type>(scv::Point(10, 290), scv::Point(W_WIDTH - 10, 490), coef);
-			
+         std::vector<dct::DiscreteCosineTransform::output_type> coef = 
+            dct::DiscreteCosineTransform::fdct(li->getSample());
 
-			sig_view = new DctView<signal_type>(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 210), li->getSample(), false);
-			
-			controller = new DctController<CoefTable>(coef_tab, model, view, sig_view);
-			coef_tab->registerObserver(controller);
-			coef_tab->notifyObservers();
+         coef_tab = new CoefTable(scv::Point(8, 220), W_WIDTH, li->getSample(), coef);
+         model = new DctModel(li->getSample());
+         view = new DctView<output_type>(scv::Point(10, 290), scv::Point(W_WIDTH - 10, 490), coef);
 
-			kernel->addComponent(view);
-			kernel->addComponent(coef_tab);
 
-			sample_panel = new SampleGenerationPanel(scv::Point(W_WIDTH/2 - 86, 500), 175, coef_tab);
-			kernel->addComponent(sample_panel);
-			kernel->addComponent(sig_view);
+         sig_view = new DctView<signal_type>(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 210), li->getSample(), false);
 
-			kernel->setWindowSize(640, 590);
-			kernel->setWindowTitle("Discrete Cosine Transform - T1");
+         controller = new DctController<CoefTable>(coef_tab, model, view, sig_view);
+         coef_tab->registerObserver(controller);
+         coef_tab->notifyObservers();
 
-			kernel->run();
-		}
+         kernel->addComponent(view);
+         kernel->addComponent(coef_tab);
 
-	}//namespace gui
+         sample_panel = new SampleGenerationPanel(scv::Point(W_WIDTH/2 - 86, 500), 175, coef_tab);
+         kernel->addComponent(sample_panel);
+         kernel->addComponent(sig_view);
+
+         kernel->setWindowSize(640, 590);
+         kernel->setWindowTitle("Discrete Cosine Transform - T1");
+
+         kernel->run();
+      }
+
+   }//namespace gui
 }//namespace hstefan

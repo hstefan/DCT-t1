@@ -5,13 +5,13 @@
 
 namespace hstefan
 {
-	namespace sample 
-	{
-		class SenoidalGen : public SampleGenerator
-		{
+   namespace sample 
+   {
+      class SenoidalGen : public SampleGenerator
+      {
 
-		};
-	}
+      };
+   }
 }
 
 #endif
