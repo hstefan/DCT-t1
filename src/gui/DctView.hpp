@@ -17,7 +17,7 @@ namespace hstefan
 			typedef std::pair<unsigned int, unsigned int> vertex_type;
 			static const unsigned int COMPONENT_SPACING_X = 10;
 			static const unsigned int COMPONENT_SPACING_Y = 10;
-			static const unsigned int CANVAS_HEIGHT = 360;
+			static const unsigned int CANVAS_HEIGHT = 200;
 			static const unsigned int SQUARE_LENGTH = 3;
 
 			DctView(const scv::Point& pi, const scv::Point& pf, 

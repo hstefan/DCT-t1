@@ -7,7 +7,7 @@ GLuint positionBufferObject;
 
 DctView::DctView(const scv::Point& pi, const scv::Point& pf, 
 	const std::vector<output_type>& coef)
-	: scv::Canvas(pi, pf), vertex_buffer(), width(pf.x - pi.x)
+	: scv::Canvas(pi, pf), vertex_buffer(), width(std::abs(pf.x - pi.x))
 {
 	setCoefficients(coef);
 }
