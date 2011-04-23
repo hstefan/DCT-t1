@@ -13,9 +13,11 @@ SampleGenerationPanel::SampleGenerationPanel(scv::Point pi, unsigned int width, 
 {
 	sample_box.addItem("Aleatoria");
 	sample_box.addItem("Linear");
+	sample_box.setIndex(0);
 	
 	len_box.addItem("8");
 	len_box.addItem("16");
+	len_box.setIndex(1);
 
 	addComponent(&sample_box);
 	addComponent(&sample_button);

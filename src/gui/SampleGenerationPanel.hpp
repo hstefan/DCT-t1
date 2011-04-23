@@ -42,6 +42,9 @@ namespace hstefan
 
 			void generateSample()
 			{
+				if(sample_box.getIndex() < 0 || len_box.getIndex() < 0)
+					return;
+
 				std::string sample_type = sample_box.getValue();
 				std::string sample_len = len_box.getValue();
 
