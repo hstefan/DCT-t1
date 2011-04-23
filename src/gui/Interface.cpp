@@ -23,11 +23,13 @@ namespace hstefan
 			coef_tab = new CoefTable(scv::Point(8, 220), W_WIDTH, li->getSample(), coef);
 			model = new DctModel(li->getSample());
 			view = new DctView<output_type>(scv::Point(10, 290), scv::Point(W_WIDTH - 10, 490), coef);
-			controller = new DctController<CoefTable>(coef_tab, model, view);
-			coef_tab->registerObserver(controller);
-			coef_tab->notifyObservers();
+			
 
 			sig_view = new DctView<signal_type>(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 210), li->getSample(), false);
+			
+			controller = new DctController<CoefTable>(coef_tab, model, view, sig_view);
+			coef_tab->registerObserver(controller);
+			coef_tab->notifyObservers();
 
 			kernel->addComponent(view);
 			kernel->addComponent(coef_tab);

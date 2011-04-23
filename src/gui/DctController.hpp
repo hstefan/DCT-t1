@@ -5,6 +5,7 @@
 #include "DctModel.hpp"
 #include "../util/Listener.hpp"
 #include "CoefTable.hpp"
+
 namespace hstefan
 {
 	namespace gui
@@ -16,18 +17,19 @@ namespace hstefan
 			typedef DctModel::output_type output_type;
 			typedef DctModel::signal_type signal_type;
 
-			DctController(T* observing, DctModel* model, DctView<output_type>* view);
+			DctController(T* observing, DctModel* model, DctView<output_type>* view, DctView<signal_type>* sig_view);
 
 			virtual void notify();
 		private:
 			DctModel* model;
 			DctView<output_type>* view;
+			DctView<signal_type>* sig_view;
 			T* observing;
 		};
 
 		template <class T>
-		DctController<T>::DctController(T* observing, DctModel* model, DctView<output_type>* view)
-			: model(model), view(view), observing(observing)
+		DctController<T>::DctController(T* observing, DctModel* model, DctView<output_type>* view, DctView<signal_type>* sig_view)
+			: model(model), view(view), observing(observing), sig_view(sig_view)
 		{}
 
 		template <class T>
@@ -36,6 +38,7 @@ namespace hstefan
 			std::vector<signal_type> sig(observing->getSignal());
 			if(sig != model->signal())
 			{
+				sig_view->setCoefficients(sig);
 				model->setSignal(sig);
 				view->setCoefficients(model->coefficients());
 				observing->setCoefficientstRow(model->coefficients());
@@ -47,6 +50,7 @@ namespace hstefan
 				{
 					model->setOutput(out);
 					view->setCoefficients(model->coefficients());
+					sig_view->setCoefficients(model->signal());
 					observing->setSampleRow(model->signal());
 				}
 			}
