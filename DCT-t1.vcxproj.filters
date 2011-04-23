@@ -77,9 +77,6 @@
     <ClCompile Include="src\gui\DctModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\DctView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\gui\SampleGenerationPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

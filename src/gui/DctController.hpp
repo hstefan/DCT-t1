@@ -16,17 +16,18 @@ namespace hstefan
 			typedef DctModel::output_type output_type;
 			typedef DctModel::signal_type signal_type;
 
-			DctController(T* observing, DctModel* model, DctView* view);
+			DctController(T* observing, DctModel* model, DctView<output_type>* view);
 
 			virtual void notify();
 		private:
 			DctModel* model;
-			DctView* view;
+			DctView<output_type>* view;
 			T* observing;
 		};
+
 		template <class T>
-		DctController<T>::DctController(T* observing, DctModel* model, DctView* view)
-			: model(model), view(view),observing(observing)
+		DctController<T>::DctController(T* observing, DctModel* model, DctView<output_type>* view)
+			: model(model), view(view), observing(observing)
 		{}
 
 		template <class T>
