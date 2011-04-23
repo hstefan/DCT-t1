@@ -10,17 +10,17 @@ namespace hstefan
 	namespace sample 
 	{
 		/*
-		 * Gera amostra em progressao aritmetica, com valor inicial aleatorio e razao aleatoria (entre 1 e 20)
+		 * Gera amostra em progressao aritmetica, com valor inicial aleatorio e razao aleatoria.
 		 */
 		class LinearGen : public SampleGenerator
 		{
-		private:
-			static const int MAX_RATE = 30;
 		public:
 			void generateSample(unsigned int n) 
 			{
-				const signal_type rate = ((signal_type) (std::abs(rand()) + 1)) % MAX_RATE;
- 				signal_type start = (signal_type)rand() % (std::numeric_limits<signal_type>::max() - n - MAX_RATE);
+				const unsigned int max_rate = std::numeric_limits<signal_type>::max()/n;
+
+				const signal_type rate = 1 + (signal_type) rand() % max_rate;
+ 				signal_type start = (signal_type)rand() % (std::numeric_limits<signal_type>::max() - n*rate);
 				signal.resize(n);
 				for(unsigned int i = 0; i < n; ++i)
 				{
@@ -32,4 +32,5 @@ namespace hstefan
 		};
 	} //namespace sample
 } //namespace hstefan
+
 #endif
