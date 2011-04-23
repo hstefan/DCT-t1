@@ -83,6 +83,7 @@
     <ClInclude Include="src\gui\CoefTable.hpp" />
     <ClInclude Include="src\gui\DctModel.hpp" />
     <ClInclude Include="src\gui\DctView.hpp" />
+    <ClInclude Include="src\sample\EqualValuesGen.hpp" />
     <ClInclude Include="src\gui\Interface.hpp" />
     <ClInclude Include="src\gui\SampleGenerationPanel.hpp" />
     <ClInclude Include="src\math\math.hpp" />

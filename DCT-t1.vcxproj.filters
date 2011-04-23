@@ -57,6 +57,9 @@
     <ClInclude Include="src\gui\SampleGenerationPanel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\sample\EqualValuesGen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\test\testing.cpp">

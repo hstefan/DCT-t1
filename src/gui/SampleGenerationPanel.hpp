@@ -9,6 +9,7 @@
 #include "CoefTable.hpp"
 #include "../sample/LinearGen.hpp"
 #include "../sample/RandomGen.hpp"
+#include "../sample/EqualValuesGen.hpp"
 #include <vector>
 
 namespace hstefan
@@ -56,6 +57,8 @@ namespace hstefan
 						sample_gen = new sample::RandomGen();
 					else if (sample_type == "Linear")
 						sample_gen = new sample::LinearGen();
+					else if (sample_type == "Valores Iguais")
+						sample_gen = new sample::EqualValuesGen();
 					if(sample_gen != 0)
 					{
 						sample_gen->generateSample(sz);

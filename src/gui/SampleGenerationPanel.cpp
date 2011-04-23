@@ -13,6 +13,7 @@ SampleGenerationPanel::SampleGenerationPanel(scv::Point pi, unsigned int width, 
 {
 	sample_box.addItem("Aleatoria");
 	sample_box.addItem("Linear");
+	sample_box.addItem("Valores Iguais");
 	sample_box.setIndex(0);
 	
 	len_box.addItem("8");
