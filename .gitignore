@@ -1,3 +1,4 @@
+
 *.suo
 *.sdf
 *.opensdf
@@ -6,3 +7,4 @@ Debug/
 Release/
 DctCanvas.hpp
 DctCanvas.cpp
+*.dll
