@@ -27,7 +27,7 @@ namespace hstefan
 			coef_tab->registerObserver(controller);
 			coef_tab->notifyObservers();
 
-			sig_view = new DctView<signal_type>(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 210), li->getSample());
+			sig_view = new DctView<signal_type>(scv::Point(10, 10), scv::Point(W_WIDTH - 10, 210), li->getSample(), false);
 
 			kernel->addComponent(view);
 			kernel->addComponent(coef_tab);

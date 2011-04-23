@@ -20,17 +20,18 @@ namespace hstefan
 			static const unsigned int SQUARE_LENGTH = 3;
 
 			DctView(const scv::Point& pi, const scv::Point& pf, 
-				const std::vector<T>& coef = std::vector<T>());
+				const std::vector<T>& coef = std::vector<T>(), bool middle_based = true);
 			void render();
 			void setCoefficients(const std::vector<T>& coef);
 		protected:
 			std::vector<vertex_type> vertex_buffer;
+			bool middle;
 		};
 
 		template <class T>
 		DctView<T>::DctView(const scv::Point& pi, const scv::Point& pf, 
-			const std::vector<T>& coef)
-			: scv::Canvas(pi, pf), vertex_buffer()
+			const std::vector<T>& coef, bool middle_based)
+			: scv::Canvas(pi, pf), vertex_buffer(), middle(middle_based)
 		{
 			setCoefficients(coef);
 		}
@@ -60,16 +61,20 @@ namespace hstefan
 			}
 			glEnd();
 
-			glLineWidth(.5f);
-			glEnable(GL_LINE_STIPPLE);
-			glLineStipple(6, 0xAAAA); //linha tracejada
-			glBegin(GL_LINE_STRIP);
-			glColor3f(0.f, 0.f, 0.f);
-			glVertex2i(0, getHeight()/2);
-			glVertex2i(getWidth(), getHeight()/2);
-			glEnd();
+			if(middle)
+			{
+				glLineWidth(.5f);
+				glEnable(GL_LINE_STIPPLE);
+				glLineStipple(6, 0xAAAA); //linha tracejada
+				glBegin(GL_LINE_STRIP);
+				glColor3f(0.f, 0.f, 0.f);
+				glVertex2i(0, getHeight()/2);
+				glVertex2i(getWidth(), getHeight()/2);
+				glEnd();
 
-			glDisable(GL_LINE_STIPPLE);
+				glDisable(GL_LINE_STIPPLE);
+			}
+
 			glDisable(GL_LINE_SMOOTH_HINT);
 		}
 
@@ -78,6 +83,7 @@ namespace hstefan
 		{
 			vertex_buffer.clear();
 			unsigned int x = 10;
+			unsigned int div = middle ? 2 : 1;
 			const unsigned int ratio = (getWidth() - COMPONENT_SPACING_X)/coef.size();
 			T max = 0;
 			for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
@@ -88,7 +94,7 @@ namespace hstefan
 			for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
 			{
 				vertex_buffer.push_back( vertex_type(x, 
-					(unsigned int)(-((getHeight()/2.f)/(float)max) * (*it) + getHeight()/2) ));
+					(unsigned int)(-((getHeight()/div)/(float)max) * (*it) + getHeight()/div) ));
 				x += ratio;
 			}
 		}
