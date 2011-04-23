@@ -65,7 +65,7 @@ namespace hstefan
 				int col_number = getNumberOfColumns();
 				std::ostringstream stream;
 
-				for(int i = 0; i < col_number; ++i)
+				for(int i = 0; i < signal_vec.size(); ++i)
 				{
 					stream << (unsigned int)signal_vec[i];
 					if(getString(0, i) != stream.str())
@@ -80,7 +80,7 @@ namespace hstefan
 				stream.seekp(0);
 				stream.clear();
 				
-				for(int i = 0; i < col_number; ++i)
+				for(int i = 0; i < coef_vec.size(); ++i)
 				{
 					stream << coef_vec[i];
 					if(getString(1, i) != stream.str())
@@ -120,7 +120,7 @@ namespace hstefan
 		{
 			normalizeSampleRow();
 			signal_vec.clear();
-			for(int i = 0; i < getNumberOfColumns(); ++i)
+			for(int i = 0; i < coef_vec.size(); ++i)
 				signal_vec.push_back(atoi(getString(SAMPLE_ROW_NUMBER, i).c_str()));
 			notifyObservers();
 		}
@@ -138,6 +138,7 @@ namespace hstefan
 				}
 			}
 			coef_vec[cel_number] = atoi(getString(COEF_ROW_NUMBER, cel_number).c_str());
+			resizeTable();
 			notifyObservers();
 		}
 
@@ -156,7 +157,7 @@ namespace hstefan
 		{
 			coef_vec.resize(dct_row.size());
 			std::ostringstream stream;
-			for(int i = 0; i < getNumberOfColumns(); ++i)
+			for(int i = 0; i < dct_row.size(); ++i)
 			{
 				coef_vec[i] = dct_row[i];
 				stream << dct_row[i];
@@ -164,13 +165,14 @@ namespace hstefan
 				stream.str(""); 
 				stream.clear();
 			}
+			resizeTable();
 		}
 
 		void CoefTable::setSampleRow(const std::vector<signal_type>& signal_row)
 		{
 			signal_vec.resize(signal_row.size());
 			std::ostringstream stream;
-			for(int i = 0; i < getNumberOfColumns(); ++i)
+			for(int i = 0; i < signal_row.size(); ++i)
 			{
 				signal_vec[i] = signal_row[i];
 				stream << (unsigned int)signal_vec[i];
@@ -178,42 +180,45 @@ namespace hstefan
 				stream.str("");
 				stream.clear();
 			}
+			resizeTable();
 		}
 
 		void CoefTable::onSampleRowChange()
 		{
+			resizeTable();
 			notifyObservers();
 		}
 
 		void CoefTable::resizeTable()
 		{
-			std::deque<std::deque<scv::TextBox*>>::iterator rows_iter = _table.begin();
-			std::deque<std::deque<scv::TextBox*>>::iterator rows_end_iter = _table.end();
-
-			std::deque<scv::TextBox*>::reverse_iterator rev_iter_column;
-			std::deque<scv::TextBox*>::reverse_iterator rev_iter_begin;
-
+			//thanks to the worthless SCV , we'll just "lock/unlock" textfields (it's impossible to move them, also impossible to set cell width)
+			//also impossible to remove rows and columns
+			//SCV might mean Sure Cant be Valuable
 			int diff = getNumberOfColumns() - signal_vec.size();
-			int left = diff;
-			if(diff < 0)
+		
+			int index = signal_vec.size();
+			if(diff > 0)
 			{
-				for(; rows_iter != rows_end_iter; ++rows_iter)
+				scv::TextFilter scv_useless;
+				scv_useless.denyAll();
+				while(index < getNumberOfColumns())
 				{
-					left = std::abs(diff);
-					for(rev_iter_column = (*rows_iter).rend(), rev_iter_begin = (*rows_iter).rbegin(); 
-						rev_iter_column != rev_iter_begin; ++rev_iter_column)
-					{
-						(*rows_iter).erase(rev_iter_column.base());	
-						left--;
-					}
+					_table[0][index]->setFilter(scv_useless);
+					_table[1][index++]->setFilter(scv_useless);	
+				}
+				index = signal_vec.size();
+				while(index < getNumberOfColumns())
+				{
+					setString(SAMPLE_ROW_NUMBER, index, "");
+					setString(COEF_ROW_NUMBER, index++, "");
 				}
 			}
-
 			else if(diff > 0)
 			{
-				while(left-- >= 0)
+				while(index < getNumberOfColumns())
 				{
-
+					_table[0][index]->setFilter(uinteger_filter);
+					_table[1][index++]->setFilter(double_filter);	
 				}
 			}
 		}

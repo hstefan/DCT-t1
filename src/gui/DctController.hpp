@@ -32,7 +32,7 @@ namespace hstefan
 		template <class T>
 		void DctController<T>::notify()
 		{
-			std::vector<signal_type> sig = observing->getSignal();
+			std::vector<signal_type> sig(observing->getSignal());
 			if(sig != model->signal())
 			{
 				model->setSignal(sig);
