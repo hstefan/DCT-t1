@@ -74,7 +74,6 @@ namespace hstefan
 
             glDisable(GL_LINE_STIPPLE);
          }
-
          glDisable(GL_LINE_SMOOTH_HINT);
       }
 
@@ -84,17 +83,18 @@ namespace hstefan
          vertex_buffer.clear();
          unsigned int x = 10;
          unsigned int div = middle ? 2 : 1;
-         const unsigned int ratio = (getWidth() - COMPONENT_SPACING_X)/coef.size();
+         const unsigned int ratio = getWidth()/coef.size() + 2*COMPONENT_SPACING_X/coef.size();
          T max = 0;
          for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
          {
             if (abs(*it) > max) 
                max = abs(*it);
          }
+
          for(std::vector<T>::const_iterator it = coef.begin(); it != coef.end(); ++it)
          {
             vertex_buffer.push_back( vertex_type(x, 
-               (unsigned int)(-((getHeight()/div)/(float)max) * (*it) + getHeight()/div) ));
+               (unsigned int)(-(((getHeight() - 10)/div)/(float)max) * (*it) + getHeight()/div) ));
             x += ratio;
          }
       }

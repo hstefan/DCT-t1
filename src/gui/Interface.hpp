@@ -16,7 +16,7 @@ namespace hstefan
       public:
          Interface();
 
-         static const unsigned int W_WIDTH = 640;
+         static const unsigned int W_WIDTH = 650;
          static const unsigned int W_HEIGHT = 480;
 
          typedef dct::DiscreteCosineTransform::signal_type signal_type;

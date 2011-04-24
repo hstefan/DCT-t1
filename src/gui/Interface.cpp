@@ -38,7 +38,7 @@ namespace hstefan
          kernel->addComponent(sample_panel);
          kernel->addComponent(sig_view);
 
-         kernel->setWindowSize(640, 590);
+         kernel->setWindowSize(W_WIDTH, 590);
          kernel->setWindowTitle("Discrete Cosine Transform - T1");
 
          kernel->run();
