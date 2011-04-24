@@ -2,8 +2,10 @@
 #define HSTEFAN_DCT_VIEW_HPP
 
 #include <SCV/Canvas.h>
+#include <SCV/Kernel.h>
 #include <vector>
 #include <utility>
+#include <iostream>
 #include "../dct/DCT.hpp"
 
 namespace hstefan
@@ -23,15 +25,26 @@ namespace hstefan
             const std::vector<T>& coef = std::vector<T>(), bool middle_based = true);
          void render();
          void setCoefficients(const std::vector<T>& coef);
+
+         virtual void onMouseOver(const scv::MouseEvent &evt);
+
+         inline scv::Label* getLabel();
+
       protected:
+         int overSquare(scv::Point pos);
+
+         virtual void onMouseHold( const scv::MouseEvent &evt );
+
          std::vector<vertex_type> vertex_buffer;
+         std::vector<T> original;
          bool middle;
+         scv::Label val_label;
       };
 
       template <class T>
       DctView<T>::DctView(const scv::Point& pi, const scv::Point& pf, 
          const std::vector<T>& coef, bool middle_based)
-         : scv::Canvas(pi, pf), vertex_buffer(), middle(middle_based)
+         : scv::Canvas(pi, pf), vertex_buffer(), middle(middle_based), original(), val_label(scv::Point(0, 0), "")
       {
          setCoefficients(coef);
       }
@@ -80,6 +93,8 @@ namespace hstefan
       template <class T>
       void DctView<T>::setCoefficients(const std::vector<T>& coef)
       {
+         original.resize(coef.size());
+         original = coef;
          vertex_buffer.clear();
          unsigned int x = 10;
          unsigned int div = middle ? 2 : 1;
@@ -97,6 +112,83 @@ namespace hstefan
                (unsigned int)(-(((getHeight() - 10)/div)/(float)max) * (*it) + getHeight()/div) ));
             x += ratio;
          }
+      }
+
+      template <class T>
+      void DctView<T>::onMouseOver(const scv::MouseEvent &evt)
+      {
+         int sq = overSquare(evt.getPosition());
+         if(sq >= 0)
+         {
+            scv::Point lab_pos = evt.getPosition() + getRelativePosition() - scv::Point(15, 15);
+            
+            val_label.setRelativePosition(lab_pos);
+            
+            if(!val_label.isVisible())
+               val_label.setVisible(true);
+
+            std::ostringstream stream;
+            stream << toNumber(original[sq]);
+            val_label.setString(stream.str());
+         }
+         else if (val_label.isVisible())
+         {
+            val_label.setVisible(false);
+         }
+      }
+
+      template <class T>
+      void DctView<T>::onMouseHold(const scv::MouseEvent &evt)
+      {
+         
+      }
+
+     inline double toNumber(double x)
+     {
+        return x;
+     }
+
+     inline unsigned int toNumber(unsigned char x)
+     {
+        return (unsigned int)x;
+     }
+
+     inline int toNumber(char x)
+     {
+        return (int)x;
+     }
+
+      template <class T>
+      int DctView<T>::overSquare(scv::Point pos)
+      {
+         vertex_type aux;
+         int i = 0;
+         for(std::vector<vertex_type>::iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it, ++i)
+         {
+            aux = *it;
+            if(pos.x >= aux.first - SQUARE_LENGTH && pos.y >= aux.second - SQUARE_LENGTH
+               && pos.x <= aux.first + SQUARE_LENGTH && pos.y <= aux.second + SQUARE_LENGTH)
+            {
+               if(label)
+               {
+                  std::ostringstream stream;
+                  stream << toNumber(original[i]);
+                  val_label.setString(stream.str());
+               }
+               else
+               {
+                  (*it).second = pos.y;
+               }
+               return i;
+            }
+         }
+         return -1;
+      }
+
+      template <class T>
+      scv::Label* DctView<T>::getLabel()
+      {
+         return &val_label;
       }
    }
 }

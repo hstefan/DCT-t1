@@ -20,7 +20,7 @@ namespace hstefan
          std::vector<dct::DiscreteCosineTransform::output_type> coef = 
             dct::DiscreteCosineTransform::fdct(li->getSample());
 
-         coef_tab = new CoefTable(scv::Point(8, 220), W_WIDTH, li->getSample(), coef);
+         coef_tab = new CoefTable(scv::Point(12, 220), W_WIDTH, li->getSample(), coef);
          model = new DctModel(li->getSample());
          view = new DctView<output_type>(scv::Point(10, 290), scv::Point(W_WIDTH - 10, 490), coef);
 
@@ -37,6 +37,8 @@ namespace hstefan
          sample_panel = new SampleGenerationPanel(scv::Point(W_WIDTH/2 - 86, 500), 175, coef_tab);
          kernel->addComponent(sample_panel);
          kernel->addComponent(sig_view);
+         kernel->addComponent(sig_view->getLabel());
+         kernel->addComponent(view->getLabel());
 
          kernel->setWindowSize(W_WIDTH, 590);
          kernel->setWindowTitle("Discrete Cosine Transform - T1");
