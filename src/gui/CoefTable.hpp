@@ -76,9 +76,15 @@ namespace hstefan
 
       private:
          /**
-         * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido.
-         */
+          * Normaliza a linha de amostra, para que não haja valores de sinal maiores que o permitido (0,255)
+          */
          void normalizeSampleRow();
+
+         /**
+          * Redimensiona a tabela (tornando os campos extra não editaveis)
+          * Exemplificando, caso tenhamos 16 colunas mas apenas 8 valores, os primeiros 8 campos manterão-se "normais" 
+          * e os outros serão bloqueados para edição e exibirão uma string vazia. 
+          */
          void resizeTable();
 
          std::vector<output_type> coef_vec;

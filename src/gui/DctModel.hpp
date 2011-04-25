@@ -23,7 +23,13 @@ namespace hstefan
          void setSignal(const std::vector<signal_type>& signal);
          void setOutput(const std::vector<output_type>& output);
       private:
+         /**
+          * Aplica a dct sobre m_signal.
+          */
          void applyDct();
+         /**
+          * Aplica a inversa da dct sobre m_output.
+          */
          void applyIdct();
       private:
          std::vector<signal_type> m_signal;

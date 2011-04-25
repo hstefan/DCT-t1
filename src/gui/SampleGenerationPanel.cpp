@@ -26,3 +26,33 @@ SampleGenerationPanel::SampleGenerationPanel(scv::Point pi, unsigned int width, 
    addComponent(&len_label);
    addComponent(&len_box);
 }
+
+ void SampleGenerationPanel::generateSample()
+ {
+    if(sample_box.getIndex() < 0 || len_box.getIndex() < 0)
+       return;
+
+    std::string sample_type = sample_box.getValue();
+    std::string sample_len = len_box.getValue();
+
+    if(sample_type != "" && sample_len != "")
+    {
+       unsigned int sz = atoi(sample_len.c_str());
+       sample::SampleGenerator* sample_gen = 0;
+       if(sample_type == "Aleatoria")
+          sample_gen = new sample::RandomGen();
+       else if (sample_type == "Linear")
+          sample_gen = new sample::LinearGen();
+       else if (sample_type == "Valores Iguais")
+          sample_gen = new sample::EqualValuesGen();
+       if(sample_gen != 0)
+       {
+          sample_gen->generateSample(sz);
+          std::vector<sample::SampleGenerator::signal_type> signal(sample_gen->getSample());
+          table_ptr->setSampleRow(signal);
+          table_ptr->onSampleRowChange();
+          delete sample_gen;
+       }
+    }
+
+ }

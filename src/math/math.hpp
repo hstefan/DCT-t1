@@ -9,7 +9,7 @@ namespace hstefan
       * @param x valor a ser invertida a raiz quadrada.
       * @return raiz quadrada invertida.
       */
-      float invSqrt(float x)
+      inline float invSqrt(float x)
       {
          float xhalf = 0.5f*x;
          int i = *(int*)&x;

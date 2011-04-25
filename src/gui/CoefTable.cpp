@@ -19,21 +19,8 @@ namespace hstefan
       {
          std::ostringstream stream;
 
-         for(unsigned int i = 0; i < signal_row.size(); i++)
-         {
-            stream << (unsigned int)signal_row[i];
-            setString(SAMPLE_ROW_NUMBER, i, stream.str());
-            stream.str("");
-            stream.clear();
-         }
-
-         for(unsigned int i = 0; i < output_row.size(); i++)
-         {
-            stream << output_row[i];
-            setString(COEF_ROW_NUMBER, i, stream.str());
-            stream.str("");
-            stream.clear();
-         }
+         setSampleRow(signal_row);
+         setCoefficientstRow(output_row);
 
          uinteger_filter.denyAll();
          uinteger_filter.allowNumbers();
@@ -44,7 +31,7 @@ namespace hstefan
          std::deque<scv::TextBox*>::iterator row_iter, row_end_it;
 
          for(row_end_it = (*table_begin_iter).begin(), row_iter = (*table_begin_iter).end(); row_end_it != row_iter; ++row_end_it) //adciona filtro que permite que apenas numeros sejam inseridos
-            (*row_end_it)->setFilter(uinteger_filter);
+            (*row_end_it)->setFilter(uinteger_filter);                                                                             //na primeira linha
 
          double_filter.denyAll();
          double_filter.allowNumbers();
@@ -52,7 +39,7 @@ namespace hstefan
 
          ++table_begin_iter;
          for(row_end_it = (*table_begin_iter).begin(), row_iter = (*table_begin_iter).end(); row_end_it != row_iter; ++row_end_it) //adciona filtro que permite o sinal negativo e pontos
-            (*row_end_it)->setFilter(double_filter);
+            (*row_end_it)->setFilter(double_filter);                                                                               //na segunda linha 
       }
 
       void CoefTable::onKeyUp( const scv::KeyEvent &evt )
@@ -70,7 +57,7 @@ namespace hstefan
                stream << (unsigned int)signal_vec[i];
                if(getString(0, i) != stream.str())
                {
-                  onSampleRowChange(evt, (unsigned int)i);
+                  onSampleRowChange(evt, (unsigned int)i); //chama a funcao que trata a celula de sample que foi alterada
                   break;
                }
                stream.str("");
@@ -85,7 +72,7 @@ namespace hstefan
                stream << coef_vec[i];
                if(getString(1, i) != stream.str())
                {
-                  onCoefficientsRowChange(evt, (unsigned int)i);
+                  onCoefficientsRowChange(evt, (unsigned int)i); //chama a funcao que trata a celula de coeficientes que foi alterada
                   break;
                }
                stream.str("");
@@ -127,10 +114,10 @@ namespace hstefan
 
       void CoefTable::onCoefficientsRowChange(const scv::KeyEvent& evt,  unsigned int cel_number)
       {
-         if(evt.getKeyCode() == '.' || evt.getKeyCode() == '-')
+         if(evt.getKeyCode() == '.' || evt.getKeyCode() == '-') //faz verificações para as teclas de . e -
          {
             std::string str_cel = getString(COEF_ROW_NUMBER, cel_number);
-            if(std::count(str_cel.begin(), str_cel.end(), evt.getKeyCode()) > 1)
+            if(std::count(str_cel.begin(), str_cel.end(), evt.getKeyCode()) > 1) //evita que mais de um . ou - apareça no numero
             {
                std::ostringstream stream;
                stream << coef_vec[cel_number];

@@ -24,13 +24,25 @@ namespace hstefan
          DctView(const scv::Point& pi, const scv::Point& pf, 
             const std::vector<T>& coef = std::vector<T>(), bool middle_based = true);
          void render();
+         /**
+          * Seta os novos coeficientes que serão renderizados, criando um buffer de vertices escalados que serão 
+          * utilizados pela render.
+          */
          void setCoefficients(const std::vector<T>& coef);
 
+         /** 
+          * Testa se o mouse está sobre algum vértice e mostra seu valor em uma label.
+          */
          virtual void onMouseOver(const scv::MouseEvent &evt);
 
          inline scv::Label* getLabel();
-
       protected:
+         /**
+          * Testa se um ponto esta dentro de algum quadrado de vértice.
+          * @param pos Ponto a ser testado.
+          * @param square_l Lado do quadrado.
+          * @return -1 se não estiver dentro de nenhum, n se estiver sobre o n-ésimo vértice.
+          */
          int overSquare(scv::Point pos, unsigned int square_l = SQUARE_LENGTH);
 
          std::vector<vertex_type> vertex_buffer;
@@ -65,7 +77,7 @@ namespace hstefan
 
          glBegin(GL_QUADS);
          glColor3f(1.f, 0.f, 0.f);
-         for(std::vector<vertex_type>::const_iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it)
+         for(std::vector<vertex_type>::const_iterator it = vertex_buffer.begin(); it != vertex_buffer.end(); ++it) //faz "quadrados" em cada vertice
          {	
             glVertex2i((*it).first - SQUARE_LENGTH, (*it).second + SQUARE_LENGTH);
             glVertex2i((*it).first + SQUARE_LENGTH, (*it).second + SQUARE_LENGTH);

@@ -8,6 +8,9 @@ namespace hstefan
 {
    namespace util
    {
+      /**
+       * Classe que oferece uma interface para trabalhar com o padrão observer.
+       */
       class Observable
       {
       public:
