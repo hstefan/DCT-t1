@@ -113,15 +113,6 @@ namespace hstefan
          {
             vertex_buffer.push_back( vertex_type(x, 
                (unsigned int)(-scale * (*it) + height/div) ));
-            //x = scale
-            //y = (*it)
-            //z = height
-            //w = div
-            // -xy + z/w
-
-            //(z/w - y)/x
-            std::cout << toNumber(*it) << "," <<  toNumber((T)((height/div) - vertex_buffer.back().second)/scale)
-                << std::endl;
             x += ratio;
          }
       }
