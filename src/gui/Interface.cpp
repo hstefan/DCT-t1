@@ -40,7 +40,16 @@ namespace hstefan
          kernel->addComponent(sig_view->getLabel());
          kernel->addComponent(view->getLabel());
 
-         kernel->setWindowSize(W_WIDTH, 590);
+         std::cout << "Trabalho 1 (Computacao Grafica)" << std::endl <<
+            "Sobre a interface:" << std::endl <<
+            "   Canvas superior: grafico da amostra de entrada" << std::endl << 
+            "   Canvas inferior: grafico da saida da DCT" << std::endl <<
+            "   Tabela: primeira linha representa os coeficientes de entrada e a segunda a saida da DCT" << std::endl <<
+            "Geracao de amostra: pode-se gerar amostras utilizando o painel de baixo ou alterar os coeficientes diretamente na tabela." << std::endl <<
+            "Observacoes: e' possivel observar os efeitos da alteracao dos coeficientes da DCT, o programa automaticamente aplicara a dct inversa e mostrara o sinal atualizado no canvas superior;" << std::endl <<
+            "   Para truncar coeficientes, basta entrar com 0 na posicao desejada;" << std::endl << "   Ao passar o mouse sobre um vertice do grafico (quadrado), seu valor sera mostrado na tela." << std::endl;
+
+         kernel->setWindowSize(W_WIDTH, W_HEIGHT);
          kernel->setWindowTitle("Discrete Cosine Transform - T1");
 
          kernel->run();
